@@ -3,13 +3,22 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LEVEL MUSIC | El arte de la guitarra, perfeccionado.</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<title>LEVEL MUSIC | Toca mejor en 90 días.</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;700&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --px: 80px;
+    --section: 120px;
+    --max: 1280px;
+  }
+
+  @media (max-width: 768px) {
+    :root { --px: 20px; --section: 72px; }
+  }
 
   body {
     background-color: #111210;
@@ -24,15 +33,13 @@
     transform: translateY(16px);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
+  .reveal.visible { opacity: 1; transform: none; }
 
   .btn-primary {
     display: inline-block;
     background: #EDEAE5;
     color: #111210;
+    font-family: 'Geist', sans-serif;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -41,9 +48,27 @@
     transition: opacity 0.2s ease, transform 0.15s ease;
     cursor: pointer;
     border: none;
+    white-space: nowrap;
   }
   .btn-primary:hover  { opacity: 0.88; }
   .btn-primary:active { transform: scale(0.97); }
+
+  .btn-ghost {
+    display: inline-block;
+    background: #1A1B19;
+    color: #E4E2DF;
+    font-family: 'Geist', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: 1px solid #2A2B28;
+    cursor: pointer;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-ghost:hover { border-color: #5A5B58; }
 
   .label-cap {
     font-size: 11px;
@@ -53,189 +78,307 @@
     color: #B4C9AC;
   }
 
-  /* FAQ accordion */
-  .faq-item { border-bottom: 1px solid #2A2B28; }
-  .faq-trigger {
-    width: 100%;
-    background: none;
-    border: none;
-    color: #E4E2DF;
-    text-align: left;
-    font-family: 'Geist', sans-serif;
-    font-size: 17px;
-    font-weight: 400;
-    padding: 24px 0;
-    cursor: pointer;
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid #2A2B28;
+    background: rgba(17,18,16,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--px);
+    height: 64px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 24px;
   }
-  .faq-trigger:hover { color: #B4C9AC; }
-  .faq-icon {
-    font-size: 20px;
-    color: #7A7D76;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
+  .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; flex-shrink: 0; }
+  .nav-links { display: flex; gap: 40px; align-items: center; }
+  .nav-links a {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; text-decoration: none;
+    color: #7A7D76; transition: color 0.2s;
   }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-  .faq-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-  }
-  .faq-body p {
-    padding-bottom: 24px;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #7A7D76;
-    font-weight: 300;
-  }
-  .faq-item.open .faq-body { max-height: 200px; }
+  .nav-links a:hover { color: #E4E2DF; }
+  .nav-links a.active { color: #B4C9AC; }
 
-  /* Pricing */
-  .plan-card {
-    background: #1A1B19;
-    border: 1px solid #2A2B28;
-    padding: 48px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  .nav-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
   }
+  .nav-toggle span {
+    display: block; width: 22px; height: 1.5px; background: #E4E2DF;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-mobile {
+    display: none; flex-direction: column; background: #111210;
+    border-bottom: 1px solid #2A2B28; padding: 24px var(--px); gap: 24px;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-size: 14px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    color: #7A7D76; transition: color 0.2s;
+  }
+  .nav-mobile a:hover { color: #E4E2DF; }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-toggle { display: flex; }
+  }
+
+  .hero-section { background: #111210; border-bottom: 1px solid #2A2B28; }
+  .hero-inner {
+    max-width: var(--max); margin: 0 auto;
+    padding: var(--section) var(--px);
+    min-height: 88vh; display: flex; flex-direction: column; justify-content: center;
+  }
+  @media (max-width: 768px) { .hero-inner { min-height: 75vh; } }
+
+  .logos-section { padding: 28px var(--px); border-bottom: 1px solid #2A2B28; background: #0E0F0D; }
+  .logos-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+  }
+  .logos-list {
+    display: flex; gap: 48px; align-items: center; opacity: 0.32; flex-wrap: wrap;
+  }
+  .logos-list span { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #E4E2DF; }
+  @media (max-width: 768px) { .logos-inner { gap: 20px; } .logos-list { gap: 28px; } }
+
+  .img-break { padding: 80px var(--px) 0; }
+  .img-placeholder {
+    height: 520px; background: #161714; overflow: hidden;
+    border: 1px solid #2A2B28; position: relative;
+  }
+  .img-placeholder img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; filter: grayscale(1); opacity: 0.75;
+  }
+  @media (max-width: 768px) { .img-placeholder { height: 260px; } .img-break { padding: 48px var(--px) 0; } }
+
+  .benefits-section {
+    padding: var(--section) var(--px);
+    border-top: 1px solid #2A2B28; border-bottom: 1px solid #2A2B28; background: #0E0F0D;
+  }
+  .benefits-grid {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  }
+  .benefit-item { padding: 0 48px 0 0; border-right: 1px solid #2A2B28; }
+  .benefit-item:nth-child(2) { padding: 0 48px; }
+  .benefit-item:nth-child(3) { padding: 0 0 0 48px; border-right: none; }
+  @media (max-width: 768px) {
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-item { padding: 36px 0 !important; border-right: none !important; border-bottom: 1px solid #2A2B28; }
+    .benefit-item:last-child { border-bottom: none; }
+  }
+
+  .testimonials-section { padding: var(--section) var(--px); background: #111210; }
+  .testimonials-grid {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;
+  }
+  .testimonial-card { border-left: 2px solid #B4C9AC; padding: 0 0 0 28px; }
+  @media (max-width: 768px) { .testimonials-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .bento-section { padding: var(--section) var(--px); max-width: var(--max); margin: 0 auto; }
+  .bento-grid {
+    display: grid; grid-template-columns: 7fr 5fr;
+    gap: 1px; background: #2A2B28; border: 1px solid #2A2B28;
+  }
+  .bento-text {
+    background: #111210; padding: 64px;
+    display: flex; flex-direction: column; justify-content: flex-end; min-height: 480px;
+  }
+  .bento-img { background: #1A1B19; min-height: 480px; overflow: hidden; position: relative; }
+  .bento-img img { display: block; width: 100%; height: 100%; min-height: 480px; object-fit: cover; opacity: 0.85; }
+  @media (max-width: 768px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .bento-text { padding: 40px 28px; min-height: auto; }
+    .bento-img { min-height: 220px; }
+    .bento-img img { min-height: 220px; }
+  }
+
+  /* ── Pricing ── */
+  .pricing-section {
+    padding: var(--section) var(--px);
+    background: #0E0F0D; border-top: 1px solid #2A2B28;
+  }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: #2A2B28;
+  }
+  .plan-card { background: #1A1B19; padding: 48px 40px; display: flex; flex-direction: column; }
   .plan-card.featured {
-    border-color: #B4C9AC;
-    background: #141613;
+    border: 2px solid #B4C9AC; background: #141613;
+    margin: -1px; position: relative; z-index: 1;
   }
   .plan-feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #2A2B28;
-    font-size: 15px;
-    line-height: 1.5;
-    color: #C8C6C3;
-    font-weight: 300;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid #2A2B28;
+    font-size: 15px; line-height: 1.5; color: #C8C6C3; font-weight: 300;
   }
+  .plan-feature.disabled { color: #3A3B38; }
   .plan-feature:last-of-type { border-bottom: none; }
   .check { color: #B4C9AC; flex-shrink: 0; margin-top: 2px; }
 
-  /* Testimonials */
-  .testimonial-card {
-    border-left: 2px solid #B4C9AC;
-    padding: 0 0 0 28px;
+  /* Precio animado */
+  .price-display {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 32px;
+    gap: 0;
   }
+  .price-currency {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #E4E2DF;
+    margin-right: 2px;
+    line-height: 1;
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+  .price-number {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    /* will-change: contents (no la ponemos, innecesario aquí) */
+  }
+  .price-period {
+    font-size: 14px;
+    color: #7A7D76;
+    margin-left: 6px;
+  }
+
+  @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .plan-card.featured { margin: 0; } }
+  @media (max-width: 768px) { .plan-card { padding: 36px 24px; } }
+
+  .cta-section { padding: var(--section) var(--px); background: #1A1B19; border-top: 1px solid #2A2B28; }
+  .cta-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+
+  footer { border-top: 1px solid #2A2B28; background: #111210; padding: 36px var(--px); }
+  .footer-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+  }
+  .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #7A7D76; text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: #E4E2DF; }
+
+  .section-header { margin-bottom: 64px; }
 </style>
 </head>
 
 <body>
 
-<!-- ─── NAV ─────────────────────────────────────────────────────────── -->
-<nav style="position:sticky; top:0; z-index:50; border-bottom:1px solid #2A2B28; background:rgba(17,18,16,0.9); backdrop-filter:blur(12px);">
-  <div style="max-width:1280px; margin:0 auto; padding:0 80px; height:64px; display:flex; align-items:center; justify-content:space-between;">
-    <span style="font-size:18px; font-weight:700; letter-spacing:-0.02em;">LEVEL MUSIC</span>
-    <div style="display:flex; gap:40px; align-items:center;">
-      <a href="#lecciones" class="label-cap" style="color:#B4C9AC; text-decoration:none;">Lecciones</a>
-      <a href="#metodo" class="label-cap" style="color:#7A7D76; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Método</a>
-      <a href="#precios" class="label-cap" style="color:#7A7D76; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Precios</a>
-      <a href="#comunidad" class="label-cap" style="color:#7A7D76; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Comunidad</a>
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">LEVEL MUSIC</span>
+    <div class="nav-links">
+      <a href="#lecciones" class="active">Lecciones</a>
+      <a href="#metodo">Método</a>
+      <a href="#precios">Precios</a>
+      <a href="#comunidad">Comunidad</a>
     </div>
-    <button class="btn-primary">Empezar</button>
+    <button class="btn-primary nav-cta">Empezar</button>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#lecciones" onclick="closeNav()">Lecciones</a>
+    <a href="#metodo" onclick="closeNav()">Método</a>
+    <a href="#precios" onclick="closeNav()">Precios</a>
+    <a href="#comunidad" onclick="closeNav()">Comunidad</a>
+    <button class="btn-primary" style="align-self:flex-start; margin-top:8px;">Empezar</button>
   </div>
 </nav>
 
 <main>
 
-<!-- ─── HERO ─────────────────────────────────────────────────────────── -->
-<section id="lecciones" style="min-height:88vh; display:flex; flex-direction:column; justify-content:center; padding:120px 80px 100px; max-width:1280px; margin:0 auto;">
-  <div class="reveal">
-    <p class="label-cap" style="margin-bottom:32px;">Guitar Education</p>
-    <h1 style="font-size:clamp(40px, 6vw, 72px); font-weight:700; line-height:1.05; letter-spacing:-0.025em; max-width:720px; margin-bottom:28px;">
-      El arte de la guitarra,<br/>perfeccionado.
-    </h1>
-    <p style="font-size:18px; line-height:1.7; color:#7A7D76; max-width:560px; margin-bottom:52px; font-weight:300;">
-      Nuestro sistema de análisis de audio detecta exactamente qué estás haciendo mal y te dice cómo corregirlo. Sin suposiciones, sin "practica más".
-    </p>
-    <button class="btn-primary">Ver mi plan de estudio</button>
-  </div>
-</section>
-
-<!-- ─── PRUEBA SOCIAL / LOGOS ─────────────────────────────────────────
-     NUEVA SECCIÓN — va justo después del Hero para establecer credibilidad
-     antes de que el visitante siga leyendo. Reemplaza los SVG por tus logos reales. -->
-<section style="padding:32px 80px; border-top:1px solid #2A2B28; border-bottom:1px solid #2A2B28; background:#0E0F0D;">
-  <div style="max-width:1280px; margin:0 auto; display:flex; align-items:center; gap:64px; flex-wrap:wrap;">
-    <p class="label-cap" style="color:#7A7D76; white-space:nowrap; flex-shrink:0;">Confiado por músicos de</p>
-    <!-- Reemplaza cada uno de estos bloques con tu logo real (img o svg) -->
-    <div style="display:flex; gap:56px; align-items:center; opacity:0.35; flex-wrap:wrap;">
-      <span style="font-size:15px; font-weight:700; letter-spacing:0.06em; color:#E4E2DF;">BERKLEE</span>
-      <span style="font-size:15px; font-weight:700; letter-spacing:0.06em; color:#E4E2DF;">GUITAR CENTER</span>
-      <span style="font-size:15px; font-weight:700; letter-spacing:0.06em; color:#E4E2DF;">FENDER</span>
-      <span style="font-size:15px; font-weight:700; letter-spacing:0.06em; color:#E4E2DF;">MUSICIANS INSTITUTE</span>
+<section id="lecciones" class="hero-section">
+  <div class="hero-inner">
+    <div class="reveal">
+      <p class="label-cap" style="margin-bottom:32px;">Guitar Education</p>
+      <h1 style="font-size:clamp(36px, 6vw, 72px); font-weight:700; line-height:1.05; letter-spacing:-0.025em; max-width:720px; margin-bottom:28px;">
+        Toca mejor en 90 días,<br/>o te devolvemos el dinero.
+      </h1>
+      <p style="font-size:clamp(16px, 2vw, 18px); line-height:1.7; color:#7A7D76; max-width:520px; margin-bottom:52px; font-weight:300;">
+        Nuestro sistema de análisis de audio detecta exactamente qué estás haciendo mal y te dice cómo corregirlo. Sin suposiciones, sin "practica más".
+      </p>
+      <button class="btn-primary" id="hero-cta">Ver mi plan de estudio</button>
     </div>
   </div>
 </section>
 
-<!-- ─── IMAGE BREAK ───────────────────────────────────────────────────
-     Movida aquí — ahora actúa como pausa visual entre credibilidad y argumentos,
-     no interrumpe el flujo del Hero. -->
-<section style="padding:80px 80px 0;">
-  <div class="reveal" style="height:520px; background:#1A1B19; overflow:hidden; border:1px solid #2A2B28;">
-    <!-- Reemplaza este bloque con tu imagen real -->
-    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#161714;">
-      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#2A2B28" stroke-width="1" style="opacity:0.5;">
-        <rect x="3" y="3" width="18" height="18" rx="1"/><path d="m3 9 4-4 4 4 4-4 4 4"/><circle cx="12" cy="15" r="2"/>
-      </svg>
+<section class="logos-section">
+  <div class="logos-inner">
+    <p class="label-cap" style="color:#7A7D76; flex-shrink:0;">Alumnos que vienen de</p>
+    <div class="logos-list">
+      <span>Lima</span>
+      <span>Buenos Aires</span>
+      <span>Ciudad de México</span>
+      <span>Madrid</span>
+      <span>Bogotá</span>
     </div>
   </div>
 </section>
 
-<!-- ─── BENEFITS ──────────────────────────────────────────────────────── -->
-<section id="metodo" style="padding:120px 80px; border-top:1px solid #2A2B28; border-bottom:1px solid #2A2B28; background:#0E0F0D;">
-  <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:0;">
+<section class="img-break">
+  <div class="reveal img-placeholder">
+    <img src="guitar.jpg" alt="Guitarrista practicando en estudio">
+  </div>
+</section>
 
-    <div class="reveal" style="padding:0 48px 0 0; border-right:1px solid #2A2B28;">
+<section id="metodo" class="benefits-section">
+  <div class="benefits-grid">
+    <div class="benefit-item reveal">
       <p class="label-cap" style="margin-bottom:20px;">01</p>
       <h3 style="font-size:22px; font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;">Método progresivo</h3>
       <p style="font-size:16px; line-height:1.7; color:#7A7D76; font-weight:300;">
         Un currículo que respeta los fundamentos clásicos mientras integra técnicas contemporáneas con rigor académico.
       </p>
     </div>
-
-    <div class="reveal" style="padding:0 48px; border-right:1px solid #2A2B28;">
+    <div class="benefit-item reveal">
       <p class="label-cap" style="margin-bottom:20px;">02</p>
       <h3 style="font-size:22px; font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;">Feedback en tiempo real</h3>
       <p style="font-size:16px; line-height:1.7; color:#7A7D76; font-weight:300;">
         Análisis de audio que detecta cada matiz de tu ejecución y entrega corrección técnica instantánea.
       </p>
     </div>
-
-    <div class="reveal" style="padding:0 0 0 48px;">
+    <div class="benefit-item reveal">
       <p class="label-cap" style="margin-bottom:20px;">03</p>
       <h3 style="font-size:22px; font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;">Comunidad de expertos</h3>
       <p style="font-size:16px; line-height:1.7; color:#7A7D76; font-weight:300;">
-        Acceso a masterclasses dirigidas por guitarristas de reconocimiento internacional y foros de discusión activos.
+        Masterclasses con guitarristas de reconocimiento internacional y foros de discusión activos.
       </p>
     </div>
-
   </div>
 </section>
 
-<!-- ─── TESTIMONIOS ────────────────────────────────────────────────────
-     NUEVA SECCIÓN — construye confianza antes de mostrar precios.
-     Reemplaza los textos con testimonios reales de tus alumnos. -->
-<section id="comunidad" style="padding:120px 80px; background:#111210;">
-  <div style="max-width:1280px; margin:0 auto;">
-
-    <div class="reveal" style="margin-bottom:72px;">
+<section id="comunidad" class="testimonials-section">
+  <div style="max-width:var(--max); margin:0 auto;">
+    <div class="reveal section-header">
       <p class="label-cap" style="margin-bottom:16px;">Lo que dicen nuestros alumnos</p>
-      <h2 style="font-size:clamp(24px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; max-width:480px;">
+      <h2 style="font-size:clamp(22px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; max-width:480px;">
         Resultados que hablan por sí solos.
       </h2>
     </div>
-
-    <div class="reveal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;">
-
+    <div class="reveal testimonials-grid">
       <div class="testimonial-card">
         <p style="font-size:17px; line-height:1.7; color:#C8C6C3; font-weight:300; margin-bottom:28px;">
           "En seis meses pasé de no saber leer una partitura a tocar piezas de nivel intermedio. La estructura del método es impecable."
@@ -243,7 +386,6 @@
         <p style="font-size:14px; font-weight:700; letter-spacing:-0.01em; margin-bottom:4px;">Martina Ríos</p>
         <p class="label-cap" style="color:#7A7D76; font-size:10px;">Guitarra clásica · Nivel intermedio</p>
       </div>
-
       <div class="testimonial-card">
         <p style="font-size:17px; line-height:1.7; color:#C8C6C3; font-weight:300; margin-bottom:28px;">
           "El feedback de audio me dio lo que ningún profesor presencial había podido darme: objetividad sobre mi técnica de púa."
@@ -251,7 +393,6 @@
         <p style="font-size:14px; font-weight:700; letter-spacing:-0.01em; margin-bottom:4px;">Diego Almeida</p>
         <p class="label-cap" style="color:#7A7D76; font-size:10px;">Guitarra eléctrica · Nivel avanzado</p>
       </div>
-
       <div class="testimonial-card">
         <p style="font-size:17px; line-height:1.7; color:#C8C6C3; font-weight:300; margin-bottom:28px;">
           "Las masterclasses con artistas internacionales valen por sí solas todo el precio de la suscripción. Acceso que antes era impensable."
@@ -259,103 +400,96 @@
         <p style="font-size:14px; font-weight:700; letter-spacing:-0.01em; margin-bottom:4px;">Sofía Mendoza</p>
         <p class="label-cap" style="color:#7A7D76; font-size:10px;">Guitarra acústica · Nivel principiante</p>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ─── CONTENT BENTO (Currículo) ────────────────────────────────────── -->
-<section style="padding:0 80px 120px; max-width:1280px; margin:0 auto;">
-  <div class="reveal" style="display:grid; grid-template-columns:7fr 5fr; gap:1px; background:#2A2B28; border:1px solid #2A2B28;">
-
-    <div style="background:#111210; padding:64px; display:flex; flex-direction:column; justify-content:flex-end; min-height:480px;">
+<section class="bento-section">
+  <div class="reveal bento-grid">
+    <div class="bento-text">
       <p class="label-cap" style="margin-bottom:20px;">El currículo</p>
-      <h2 style="font-size:clamp(28px, 3.5vw, 42px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
+      <h2 style="font-size:clamp(24px, 3.5vw, 42px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
         Explora el mástil con precisión matemática.
       </h2>
       <p style="font-size:16px; line-height:1.7; color:#7A7D76; max-width:420px; font-weight:300;">
         Nuestros módulos eliminan la ambigüedad del aprendizaje. Domina teoría y práctica con una estructura que avanza sin dejar vacíos.
       </p>
     </div>
-
-    <div style="background:#1A1B19; min-height:480px; overflow:hidden; position:relative;">
-      <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2A2B28" stroke-width="1" style="opacity:0.5;">
-          <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
-        </svg>
-      </div>
+    <div class="bento-img">
+      <img src="mastil.jpg" alt="Detalle del mástil de guitarra">
     </div>
-
   </div>
 </section>
 
-<!-- ─── PRECIOS ────────────────────────────────────────────────────────
-     NUEVA SECCIÓN — elimina la ansiedad del "¿a qué me comprometo?".
-     El plan Pro está marcado como recomendado. -->
-<section id="precios" style="padding:120px 80px; background:#0E0F0D; border-top:1px solid #2A2B28;">
-  <div style="max-width:1280px; margin:0 auto;">
+<!-- ─── PRECIOS ── -->
+<section id="precios" class="pricing-section">
+  <div style="max-width:var(--max); margin:0 auto;">
 
-    <div class="reveal" style="margin-bottom:72px;">
+    <div class="reveal section-header">
       <p class="label-cap" style="margin-bottom:16px;">Planes</p>
-      <h2 style="font-size:clamp(24px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em;">
+      <h2 style="font-size:clamp(22px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em;">
         Elige tu nivel de compromiso.
       </h2>
     </div>
 
-    <div class="reveal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#2A2B28;">
+    <div class="reveal pricing-grid" id="pricing-grid">
 
-      <!-- Plan Básico -->
+      <!-- Esencial -->
       <div class="plan-card">
         <p class="label-cap" style="margin-bottom:16px;">Esencial</p>
-        <div style="margin-bottom:32px;">
-          <span style="font-size:40px; font-weight:700; letter-spacing:-0.03em;">S/59</span>
-          <span style="font-size:14px; color:#7A7D76; margin-left:6px;">/ mes</span>
+        <div class="price-display">
+          <span class="price-currency">S/</span>
+          <!-- data-target: valor final. data-duration: ms. data-suffix: texto después del número -->
+          <span class="price-number" data-counter data-target="59" data-duration="1600" data-suffix="">0</span>
+          <span class="price-period">/ mes</span>
         </div>
         <div style="margin-bottom:36px; flex:1;">
-          <div class="plan-feature"><span class="check">✓</span>Acceso al currículo completo (120 lecciones)</div>
-          <div class="plan-feature"><span class="check">✓</span>Análisis de audio básico (5 análisis / mes)</div>
+          <div class="plan-feature"><span class="check">✓</span>Currículo completo (120 lecciones)</div>
+          <div class="plan-feature"><span class="check">✓</span>Análisis de audio básico (5 / mes)</div>
           <div class="plan-feature"><span class="check">✓</span>Foro de la comunidad</div>
-          <div class="plan-feature" style="color:#3A3B38;"><span style="color:#3A3B38;">–</span>&nbsp;Masterclasses en vivo</div>
-          <div class="plan-feature" style="color:#3A3B38; border-bottom:none;"><span style="color:#3A3B38;">–</span>&nbsp;Feedback personalizado de instructores</div>
+          <div class="plan-feature disabled"><span style="color:#3A3B38;">–</span>&nbsp;Masterclasses en vivo</div>
+          <div class="plan-feature disabled"><span style="color:#3A3B38;">–</span>&nbsp;Feedback de instructores</div>
         </div>
-        <button class="btn-primary" style="width:100%; text-align:center; background:#1A1B19; color:#E4E2DF; border:1px solid #2A2B28;">Comenzar</button>
+        <button class="btn-ghost" style="width:100%; text-align:center;">Comenzar</button>
       </div>
 
-      <!-- Plan Pro (featured) -->
+      <!-- Pro (featured) -->
       <div class="plan-card featured">
         <div style="margin-bottom:20px;">
           <span class="label-cap" style="background:#B4C9AC; color:#0E1610; padding:4px 10px; font-size:10px;">Recomendado</span>
         </div>
         <p class="label-cap" style="margin-bottom:16px;">Pro</p>
-        <div style="margin-bottom:32px;">
-          <span style="font-size:40px; font-weight:700; letter-spacing:-0.03em;">S/129</span>
-          <span style="font-size:14px; color:#7A7D76; margin-left:6px;">/ mes</span>
+        <div class="price-display">
+          <span class="price-currency">S/</span>
+          <span class="price-number" data-counter data-target="129" data-duration="1800" data-suffix="">0</span>
+          <span class="price-period">/ mes</span>
         </div>
         <div style="margin-bottom:36px; flex:1;">
           <div class="plan-feature"><span class="check">✓</span>Todo lo del plan Esencial</div>
           <div class="plan-feature"><span class="check">✓</span>Análisis de audio ilimitado</div>
           <div class="plan-feature"><span class="check">✓</span>2 masterclasses en vivo por mes</div>
           <div class="plan-feature"><span class="check">✓</span>Feedback semanal de instructores</div>
-          <div class="plan-feature" style="border-bottom:none;"><span class="check">✓</span>Certificado de nivel al completar módulos</div>
+          <div class="plan-feature"><span class="check">✓</span>Certificado de nivel por módulo</div>
         </div>
         <button class="btn-primary" style="width:100%; text-align:center;">Comenzar</button>
       </div>
 
-      <!-- Plan Maestro -->
+      <!-- Maestro -->
       <div class="plan-card">
         <p class="label-cap" style="margin-bottom:16px;">Maestro</p>
-        <div style="margin-bottom:32px;">
-          <span style="font-size:40px; font-weight:700; letter-spacing:-0.03em;">S/199</span>
-          <span style="font-size:14px; color:#7A7D76; margin-left:6px;">/ mes</span>
+        <div class="price-display">
+          <span class="price-currency">S/</span>
+          <span class="price-number" data-counter data-target="199" data-duration="2000" data-suffix="">0</span>
+          <span class="price-period">/ mes</span>
         </div>
         <div style="margin-bottom:36px; flex:1;">
           <div class="plan-feature"><span class="check">✓</span>Todo lo del plan Pro</div>
-          <div class="plan-feature"><span class="check">✓</span>1 clase privada por mes con instructor</div>
+          <div class="plan-feature"><span class="check">✓</span>1 clase privada mensual con instructor</div>
           <div class="plan-feature"><span class="check">✓</span>Acceso prioritario a nuevos cursos</div>
           <div class="plan-feature"><span class="check">✓</span>Canal privado con artistas invitados</div>
-          <div class="plan-feature" style="border-bottom:none;"><span class="check">✓</span>Acceso de por vida al material descargado</div>
+          <div class="plan-feature"><span class="check">✓</span>Acceso de por vida al material descargado</div>
         </div>
-        <button class="btn-primary" style="width:100%; text-align:center; background:#1A1B19; color:#E4E2DF; border:1px solid #2A2B28;">Comenzar</button>
+        <button class="btn-ghost" style="width:100%; text-align:center;">Comenzar</button>
       </div>
 
     </div>
@@ -363,136 +497,321 @@
     <p style="text-align:center; margin-top:24px; font-size:14px; color:#7A7D76; font-weight:300;">
       Sin contratos. Cancela cuando quieras.
     </p>
-
   </div>
 </section>
 
-<!-- ─── FAQ ────────────────────────────────────────────────────────────
-     NUEVA SECCIÓN — elimina las objeciones antes del CTA final. -->
-<section style="padding:120px 80px; border-top:1px solid #2A2B28; background:#111210;">
-  <div style="max-width:720px; margin:0 auto;">
+<section style="background:#111210; border-top:1px solid #2A2B28;">
+  <div id="cta-grid" style="max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; padding:var(--section) var(--px);">
 
-    <div class="reveal" style="margin-bottom:64px;">
-      <p class="label-cap" style="margin-bottom:16px;">Preguntas frecuentes</p>
-      <h2 style="font-size:clamp(24px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em;">
-        Todo lo que necesitas saber.
+    <!-- Columna izquierda -->
+    <div class="reveal" style="padding-top:8px;">
+      <p class="label-cap" style="margin-bottom:24px;">Reserva tu lugar</p>
+      <h2 style="font-size:clamp(32px, 4vw, 54px); font-weight:700; line-height:1.05; letter-spacing:-0.025em; margin-bottom:24px;">
+        &iquest;Listo para<br/>tocar mejor?
       </h2>
+      <p style="font-size:16px; line-height:1.7; color:#7A7D76; margin-bottom:40px; font-weight:300;">
+        Completa el formulario y te confirmamos tu plan de estudio en menos de 24 horas.
+      </p>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:16px; margin-bottom:40px;">
+        <li style="display:flex; align-items:center; gap:14px; font-size:15px; color:#7A7D76; font-weight:300;">
+          <span style="width:20px; height:1px; background:#B4C9AC; flex-shrink:0; display:block;"></span>Sin pagos anticipados
+        </li>
+        <li style="display:flex; align-items:center; gap:14px; font-size:15px; color:#7A7D76; font-weight:300;">
+          <span style="width:20px; height:1px; background:#B4C9AC; flex-shrink:0; display:block;"></span>Cancela cuando quieras
+        </li>
+        <li style="display:flex; align-items:center; gap:14px; font-size:15px; color:#7A7D76; font-weight:300;">
+          <span style="width:20px; height:1px; background:#B4C9AC; flex-shrink:0; display:block;"></span>Confirmaci&oacute;n por WhatsApp
+        </li>
+      </ul>
+      <p class="label-cap" style="color:#7A7D76; cursor:pointer; display:flex; align-items:center; gap:10px; transition:color 0.2s;"
+         onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        O escr&iacute;benos por WhatsApp
+      </p>
     </div>
 
+    <!-- Columna derecha: formulario -->
     <div class="reveal">
+      <div style="background:#1A1B19; border:1px solid #2A2B28; padding:48px;">
 
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          ¿Necesito tener guitarra propia para empezar?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          <p>Sí, necesitas acceso a una guitarra acústica o eléctrica. No importa la marca ni el valor del instrumento — nuestro método está diseñado para funcionar con cualquier guitarra en condiciones básicas de afinación.</p>
+        <form id="contact-form" novalidate>
+
+          <div style="margin-bottom:22px;">
+            <label for="nombre" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
+              Nombre completo <span style="color:#5A5B58;">*</span>
+            </label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required
+              style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
+                     font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
+                     padding:14px 16px; outline:none; transition:border-color 0.2s; box-sizing:border-box;"
+              onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'"/>
+          </div>
+
+          <div style="margin-bottom:22px;">
+            <label for="telefono" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
+              WhatsApp / Tel&eacute;fono <span style="color:#5A5B58;">*</span>
+            </label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+51 999 999 999" required
+              style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
+                     font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
+                     padding:14px 16px; outline:none; transition:border-color 0.2s; box-sizing:border-box;"
+              onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'"/>
+          </div>
+
+          <div style="margin-bottom:22px;">
+            <label for="servicio" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
+              Servicio <span style="color:#5A5B58;">*</span>
+            </label>
+            <div style="position:relative;">
+              <select id="servicio" name="servicio" required
+                style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
+                       font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
+                       padding:14px 40px 14px 16px; outline:none; transition:border-color 0.2s;
+                       -webkit-appearance:none; appearance:none; cursor:pointer; box-sizing:border-box;"
+                onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'">
+                <option value="" disabled selected>Selecciona un plan</option>
+                <option value="Esencial - S/59/mes">Esencial &mdash; S/59 / mes</option>
+                <option value="Pro - S/129/mes">Pro &mdash; S/129 / mes</option>
+                <option value="Maestro - S/199/mes">Maestro &mdash; S/199 / mes</option>
+              </select>
+              <span style="position:absolute; right:16px; top:50%; transform:translateY(-50%); pointer-events:none; color:#7A7D76; font-size:10px;">&#9660;</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:28px;">
+            <label for="mensaje" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
+              Mensaje <span style="font-size:11px; font-weight:300; letter-spacing:0; text-transform:none; color:#5A5B58;">(opcional)</span>
+            </label>
+            <textarea id="mensaje" name="mensaje" placeholder="&iquest;Alguna preferencia o consulta?" rows="4"
+              style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
+                     font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
+                     padding:14px 16px; outline:none; transition:border-color 0.2s;
+                     resize:vertical; min-height:100px; box-sizing:border-box;"
+              onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'"></textarea>
+          </div>
+
+          <p id="form-error" style="display:none; font-size:13px; color:#CF6679; margin-bottom:16px; font-weight:300; line-height:1.5;"></p>
+
+          <button type="submit" id="submit-btn"
+            style="width:100%; background:#EDEAE5; color:#111210;
+                   font-family:'Geist',sans-serif; font-size:11px; font-weight:700;
+                   letter-spacing:0.12em; text-transform:uppercase;
+                   padding:18px 36px; border:none; cursor:pointer; transition:opacity 0.2s ease;">
+            Reservar ahora
+          </button>
+
+        </form>
+
+        <div id="success-msg" style="display:none; text-align:center; padding:32px 16px; opacity:0; transition:opacity 0.5s ease;">
+          <div style="width:52px; height:52px; border-radius:50%; background:#192B1C; border:1px solid #3D6644;
+                      display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+            <span style="color:#7EC88A; font-size:22px; line-height:1;">&#10003;</span>
+          </div>
+          <h3 style="font-size:20px; font-weight:700; letter-spacing:-0.01em; margin-bottom:12px; color:#E4E2DF;">
+            &iexcl;Reserva recibida!
+          </h3>
+          <p style="font-size:15px; line-height:1.7; color:#7A7D76; font-weight:300;">
+            Te confirmamos tu plan en menos de<br/>24 horas por WhatsApp.
+          </p>
         </div>
-      </div>
 
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          ¿Qué nivel necesito para comenzar?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          <p>Ninguno. El currículo arranca desde cero absoluto y tiene rutas diferenciadas para quienes ya tienen experiencia previa. Al registrarte realizas un diagnóstico breve que adapta tu punto de entrada.</p>
-        </div>
       </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          ¿Cómo funciona el análisis de audio?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          <p>Grabas tu ejecución directamente en la plataforma o cargas un archivo de audio. Nuestro sistema analiza afinación, tempo, dinámica y articulación, y te devuelve un reporte con observaciones específicas por compás.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          ¿Cuánto tiempo debo dedicar por semana?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          <p>El progreso sostenido se da con 4 a 6 horas semanales distribuidas en sesiones de 45-60 minutos. Las lecciones están diseñadas para esa cadencia, aunque el avance es completamente a tu ritmo.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          ¿Puedo cancelar en cualquier momento?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          <p>Sí, sin penalizaciones. La cancelación es efectiva al final del período facturado. El acceso al material se mantiene hasta esa fecha y puedes descargar las notas de lecciones que hayas completado.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:none;">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          ¿Las masterclasses quedan grabadas?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          <p>Todas las masterclasses quedan disponibles en la biblioteca de contenido dentro de las 48 horas posteriores a la sesión en vivo. Los suscriptores Pro y Maestro tienen acceso permanente al archivo histórico.</p>
-        </div>
-      </div>
-
     </div>
-  </div>
-</section>
 
-<!-- ─── CTA FINAL ─────────────────────────────────────────────────────── -->
-<section style="padding:120px 80px; background:#1A1B19; border-top:1px solid #2A2B28;">
-  <div class="reveal" style="max-width:640px; margin:0 auto; text-align:center;">
-    <h2 style="font-size:clamp(28px, 4vw, 48px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
-      Empieza tu viaje hoy.
-    </h2>
-    <p style="font-size:18px; line-height:1.7; color:#7A7D76; margin-bottom:48px; font-weight:300;">
-      Únete a una nueva generación de guitarristas que priorizan la disciplina, el tono y la maestría técnica.
-    </p>
-    <button class="btn-primary">Comenzar ahora</button>
   </div>
 </section>
 
 </main>
 
-<!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
-<footer style="border-top:1px solid #2A2B28; background:#111210; padding:36px 80px;">
-  <div style="max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+<footer>
+  <div class="footer-inner">
     <div>
       <span style="font-size:16px; font-weight:700; letter-spacing:-0.01em;">LEVEL MUSIC</span>
-      <p class="label-cap" style="color:#7A7D76; margin-top:8px; font-size:10px;">© 2024 Level Music. The disciplined craft of guitar.</p>
+      <p style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#7A7D76; margin-top:8px;">
+        © 2024 Level Music. The disciplined craft of guitar.
+      </p>
     </div>
-    <div style="display:flex; gap:32px;">
-      <a href="#" class="label-cap" style="color:#7A7D76; text-decoration:none; font-size:10px; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Términos</a>
-      <a href="#" class="label-cap" style="color:#7A7D76; text-decoration:none; font-size:10px; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Privacidad</a>
-      <a href="#" class="label-cap" style="color:#7A7D76; text-decoration:none; font-size:10px; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Soporte</a>
-      <a href="#" class="label-cap" style="color:#7A7D76; text-decoration:none; font-size:10px; transition:color 0.2s;" onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">Instagram</a>
+    <div class="footer-links">
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Soporte</a>
+      <a href="#">Instagram</a>
     </div>
   </div>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+  /* ─────────────────────────────────────────────────────────────
+     CONTADORES ANIMADOS
+     - Usa requestAnimationFrame, sin librerías
+     - Easing: easeOutQuart — arranca rápido, desacelera al final
+     - Se activa una sola vez (el observer se desconecta tras disparar)
+     - data-target: número final
+     - data-duration: duración en ms (1600–2000)
+     - data-suffix: texto que se añade al terminar (ej: "+")
+  ───────────────────────────────────────────────────────────── */
+
+  function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function animateCounter(el) {
+    const target   = parseInt(el.dataset.target, 10);
+    const duration = parseInt(el.dataset.duration, 10);
+    const suffix   = el.dataset.suffix || '';
+    const start    = performance.now();
+
+    function tick(now) {
+      const elapsed  = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased    = easeOutQuart(progress);
+      const current  = Math.round(eased * target);
+
+      el.textContent = current + (progress === 1 ? suffix : '');
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
       }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // Observa el contenedor de precios — cuando entra en viewport,
+  // lanza todos los contadores y desconecta el observer (una sola vez).
+  const pricingGrid = document.getElementById('pricing-grid');
+
+  const counterObserver = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Pequeño delay escalonado por plan: 0ms, 150ms, 300ms
+          document.querySelectorAll('[data-counter]').forEach((el, i) => {
+            setTimeout(() => animateCounter(el), i * 150);
+          });
+          obs.disconnect(); // nunca más se vuelve a activar
+        }
+      });
+    },
+    { threshold: 0.3 } // se activa cuando el 30% del grid es visible
+  );
+
+  counterObserver.observe(pricingGrid);
+
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
     });
   }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  function toggleFaq(trigger) {
-    const item = trigger.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
+  /* ── Mobile nav ── */
+  const toggle     = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('navMobile');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeNav() {
+    toggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
   }
-</script>
+
+
+  /* ── Formulario Formspree ── */
+  (function() {
+    var form      = document.getElementById('contact-form');
+    var submitBtn = document.getElementById('submit-btn');
+    var errorMsg  = document.getElementById('form-error');
+    var successEl = document.getElementById('success-msg');
+
+    function markField(el, valid) {
+      el.style.borderColor = valid ? '#2A2B28' : '#CF6679';
+    }
+    function setLoading(on) {
+      submitBtn.disabled    = on;
+      submitBtn.textContent = on ? 'Enviando...' : 'Reservar ahora';
+      submitBtn.style.opacity = on ? '0.5' : '1';
+      submitBtn.style.cursor  = on ? 'not-allowed' : 'pointer';
+    }
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      errorMsg.style.display = 'none';
+
+      var nombre   = document.getElementById('nombre');
+      var telefono = document.getElementById('telefono');
+      var servicio = document.getElementById('servicio');
+      var valid    = true;
+
+      [nombre, telefono].forEach(function(el) {
+        if (!el.value.trim()) { markField(el, false); valid = false; }
+        else                  { markField(el, true); }
+      });
+      if (!servicio.value) { markField(servicio, false); valid = false; }
+      else                  { markField(servicio, true); }
+
+      if (!valid) {
+        errorMsg.textContent   = 'Por favor completa los campos obligatorios.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        // ⚠️  Reemplaza TU-ENDPOINT con tu ID real de Formspree (ej: xpwzknab)
+        var res = await fetch('https://formspree.io/f/TU-ENDPOINT', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            nombre:   nombre.value.trim(),
+            telefono: telefono.value.trim(),
+            servicio: servicio.value,
+            mensaje:  document.getElementById('mensaje').value.trim()
+          })
+        });
+
+        if (res.ok) {
+          form.style.transition = 'opacity 0.4s ease';
+          form.style.opacity    = '0';
+          setTimeout(function() {
+            form.style.display         = 'none';
+            successEl.style.display    = 'block';
+            requestAnimationFrame(function() { successEl.style.opacity = '1'; });
+          }, 400);
+        } else {
+          var body = await res.json().catch(function() { return {}; });
+          errorMsg.textContent   = body.error || 'Error al enviar. Intenta de nuevo.';
+          errorMsg.style.display = 'block';
+          setLoading(false);
+        }
+      } catch(_) {
+        errorMsg.textContent   = 'Sin conexi\u00f3n. Verifica tu internet e intenta de nuevo.';
+        errorMsg.style.display = 'block';
+        setLoading(false);
+      }
+    });
+
+    /* Responsive: apilar en mobile */
+    var grid = document.getElementById('cta-grid');
+    function resizeGrid() {
+      if (!grid) return;
+      if (window.innerWidth <= 768) {
+        grid.style.gridTemplateColumns = '1fr';
+        grid.style.gap = '48px';
+      } else {
+        grid.style.gridTemplateColumns = '1fr 1fr';
+        grid.style.gap = '80px';
+      }
+    }
+    resizeGrid();
+    window.addEventListener('resize', resizeGrid);
+  })();
+
+  </script>
 </body>
 </html>
