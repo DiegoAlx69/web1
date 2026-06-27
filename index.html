@@ -1,618 +1,524 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LEVEL MUSIC | Toca mejor en 90 días.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LEVEL MUSIC | Clases de guitarra con método y garantía</title>
+<meta name="description" content="Aprende guitarra en Lima con análisis de audio en tiempo real y un método progresivo. Resultados garantizados en 90 días o te devolvemos el dinero.">
+<meta name="keywords" content="clases de guitarra Lima, escuela de guitarra Lima, aprender guitarra Peru, lecciones guitarra online, guitarra eléctrica Lima, guitarra acústica Lima, método guitarra progresivo, clases guitarra adultos Lima">
+
+<!-- ── Open Graph ── -->
+<meta property="og:type"         content="website">
+<meta property="og:locale"       content="es_PE">
+<meta property="og:url"          content="https://levelmusic.vercel.app/">
+<meta property="og:site_name"    content="Level Music">
+<meta property="og:title"        content="Level Music Lima | Clases de guitarra con método y garantía">
+<meta property="og:description"  content="Aprende guitarra en Lima con análisis de audio en tiempo real. Resultados garantizados en 90 días o te devolvemos el dinero.">
+<meta property="og:image"        content="https://levelmusic.vercel.app/og-image.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt"    content="Level Music — Escuela de guitarra en Lima">
+
+<!-- ── Twitter Card ── -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Level Music Lima | Clases de guitarra con método y garantía">
+<meta name="twitter:description" content="Aprende guitarra en Lima con análisis de audio en tiempo real. Resultados garantizados en 90 días o te devolvemos el dinero.">
+<meta name="twitter:image"       content="https://levelmusic.vercel.app/og-image.jpg">
+<meta name="twitter:image:alt"   content="Level Music — Escuela de guitarra en Lima">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;700&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg:       '#111210',
+        surface:  '#1A1B19',
+        surface2: '#0E0F0D',
+        border:   '#2A2B28',
+        text:     '#E4E2DF',
+        muted:    '#7A7D76',
+        subtle:   '#5A5B58',
+        accent:   '#B4C9AC',
+        cta:      '#EDEAE5',
+        success:  '#7EC88A',
+        'success-bg':     '#192B1C',
+        'success-border': '#3D6644',
+        error:    '#CF6679',
+      },
+      fontFamily: {
+        sans: ['Geist', 'sans-serif'],
+      },
+      fontSize: {
+        'label': ['11px', { letterSpacing: '0.12em', fontWeight: '700' }],
+      },
+      maxWidth: {
+        site: '1280px',
+      },
+      spacing: {
+        section: '120px',
+        'section-mobile': '72px',
+        px: '80px',
+        'px-mobile': '20px',
+      },
+    },
+  },
+}
+</script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Geist', sans-serif; -webkit-font-smoothing: antialiased; }
 
-  :root {
-    --px: 80px;
-    --section: 120px;
-    --max: 1280px;
-  }
-
-  @media (max-width: 768px) {
-    :root { --px: 20px; --section: 72px; }
-  }
-
-  body {
-    background-color: #111210;
-    color: #E4E2DF;
-    font-family: 'Geist', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-weight: 300;
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
-  .btn-primary {
-    display: inline-block;
-    background: #EDEAE5;
-    color: #111210;
-    font-family: 'Geist', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 16px 36px;
-    transition: opacity 0.2s ease, transform 0.15s ease;
-    cursor: pointer;
-    border: none;
-    white-space: nowrap;
-  }
-  .btn-primary:hover  { opacity: 0.88; }
-  .btn-primary:active { transform: scale(0.97); }
+  /* Select reset */
+  select { -webkit-appearance: none; appearance: none; }
 
-  .btn-ghost {
-    display: inline-block;
-    background: #1A1B19;
-    color: #E4E2DF;
-    font-family: 'Geist', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 16px 36px;
-    border: 1px solid #2A2B28;
-    cursor: pointer;
-    transition: opacity 0.2s ease, border-color 0.2s ease;
-    white-space: nowrap;
-  }
-  .btn-ghost:hover { border-color: #5A5B58; }
+  /* FAQ */
+  .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .faq-item.open .faq-body { max-height: 200px; }
+  .faq-icon { transition: transform 0.3s ease; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-  .label-cap {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #B4C9AC;
-  }
-
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid #2A2B28;
-    background: rgba(17,18,16,0.92);
-    backdrop-filter: blur(12px);
-  }
-  .nav-inner {
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 0 var(--px);
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-  }
-  .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; flex-shrink: 0; }
-  .nav-links { display: flex; gap: 40px; align-items: center; }
-  .nav-links a {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-    text-transform: uppercase; text-decoration: none;
-    color: #7A7D76; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: #E4E2DF; }
-  .nav-links a.active { color: #B4C9AC; }
-
-  .nav-toggle {
-    display: none; background: none; border: none; cursor: pointer;
-    flex-direction: column; gap: 5px; padding: 4px;
-  }
-  .nav-toggle span {
-    display: block; width: 22px; height: 1.5px; background: #E4E2DF;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
+  /* Nav toggle animation */
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: #E4E2DF; transition: transform 0.3s ease, opacity 0.3s ease; }
   .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
   .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-  .nav-mobile {
-    display: none; flex-direction: column; background: #111210;
-    border-bottom: 1px solid #2A2B28; padding: 24px var(--px); gap: 24px;
-  }
-  .nav-mobile.open { display: flex; }
-  .nav-mobile a {
-    font-size: 14px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; text-decoration: none;
-    color: #7A7D76; transition: color 0.2s;
-  }
-  .nav-mobile a:hover { color: #E4E2DF; }
+  /* Form field focus ring via Tailwind is fine, but we override the browser default outline */
+  input:focus, select:focus, textarea:focus { outline: none; }
 
-  @media (max-width: 768px) {
-    .nav-links, .nav-cta { display: none; }
-    .nav-toggle { display: flex; }
-  }
+  /* Placeholder color */
+  ::placeholder { color: #5A5B58; }
 
-  .hero-section { background: #111210; border-bottom: 1px solid #2A2B28; }
-  .hero-inner {
-    max-width: var(--max); margin: 0 auto;
-    padding: var(--section) var(--px);
-    min-height: 88vh; display: flex; flex-direction: column; justify-content: center;
-  }
-  @media (max-width: 768px) { .hero-inner { min-height: 75vh; } }
-
-  .logos-section { padding: 28px var(--px); border-bottom: 1px solid #2A2B28; background: #0E0F0D; }
-  .logos-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
-  }
-  .logos-list {
-    display: flex; gap: 48px; align-items: center; opacity: 0.32; flex-wrap: wrap;
-  }
-  .logos-list span { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #E4E2DF; }
-  @media (max-width: 768px) { .logos-inner { gap: 20px; } .logos-list { gap: 28px; } }
-
-  .img-break { padding: 80px var(--px) 0; }
-  .img-placeholder {
-    height: 520px; background: #161714; overflow: hidden;
-    border: 1px solid #2A2B28; position: relative;
-  }
-  .img-placeholder img {
-    display: block; width: 100%; height: 100%;
-    object-fit: cover; filter: grayscale(1); opacity: 0.75;
-  }
-  @media (max-width: 768px) { .img-placeholder { height: 260px; } .img-break { padding: 48px var(--px) 0; } }
-
-  .benefits-section {
-    padding: var(--section) var(--px);
-    border-top: 1px solid #2A2B28; border-bottom: 1px solid #2A2B28; background: #0E0F0D;
-  }
-  .benefits-grid {
-    max-width: var(--max); margin: 0 auto;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-  }
-  .benefit-item { padding: 0 48px 0 0; border-right: 1px solid #2A2B28; }
-  .benefit-item:nth-child(2) { padding: 0 48px; }
-  .benefit-item:nth-child(3) { padding: 0 0 0 48px; border-right: none; }
-  @media (max-width: 768px) {
-    .benefits-grid { grid-template-columns: 1fr; }
-    .benefit-item { padding: 36px 0 !important; border-right: none !important; border-bottom: 1px solid #2A2B28; }
-    .benefit-item:last-child { border-bottom: none; }
-  }
-
-  .testimonials-section { padding: var(--section) var(--px); background: #111210; }
-  .testimonials-grid {
-    max-width: var(--max); margin: 0 auto;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;
-  }
-  .testimonial-card { border-left: 2px solid #B4C9AC; padding: 0 0 0 28px; }
-  @media (max-width: 768px) { .testimonials-grid { grid-template-columns: 1fr; gap: 40px; } }
-
-  .bento-section { padding: var(--section) var(--px); max-width: var(--max); margin: 0 auto; }
-  .bento-grid {
-    display: grid; grid-template-columns: 7fr 5fr;
-    gap: 1px; background: #2A2B28; border: 1px solid #2A2B28;
-  }
-  .bento-text {
-    background: #111210; padding: 64px;
-    display: flex; flex-direction: column; justify-content: flex-end; min-height: 480px;
-  }
-  .bento-img { background: #1A1B19; min-height: 480px; overflow: hidden; position: relative; }
-  .bento-img img { display: block; width: 100%; height: 100%; min-height: 480px; object-fit: cover; opacity: 0.85; }
-  @media (max-width: 768px) {
-    .bento-grid { grid-template-columns: 1fr; }
-    .bento-text { padding: 40px 28px; min-height: auto; }
-    .bento-img { min-height: 220px; }
-    .bento-img img { min-height: 220px; }
-  }
-
-  /* ── Pricing ── */
-  .pricing-section {
-    padding: var(--section) var(--px);
-    background: #0E0F0D; border-top: 1px solid #2A2B28;
-  }
-  .pricing-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: #2A2B28;
-  }
-  .plan-card { background: #1A1B19; padding: 48px 40px; display: flex; flex-direction: column; }
-  .plan-card.featured {
-    border: 2px solid #B4C9AC; background: #141613;
-    margin: -1px; position: relative; z-index: 1;
-  }
-  .plan-feature {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 0; border-bottom: 1px solid #2A2B28;
-    font-size: 15px; line-height: 1.5; color: #C8C6C3; font-weight: 300;
-  }
-  .plan-feature.disabled { color: #3A3B38; }
-  .plan-feature:last-of-type { border-bottom: none; }
-  .check { color: #B4C9AC; flex-shrink: 0; margin-top: 2px; }
-
-  /* Precio animado */
-  .price-display {
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 32px;
-    gap: 0;
-  }
-  .price-currency {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: #E4E2DF;
-    margin-right: 2px;
-    line-height: 1;
-    align-self: flex-start;
-    margin-top: 8px;
-  }
-  .price-number {
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    /* will-change: contents (no la ponemos, innecesario aquí) */
-  }
-  .price-period {
-    font-size: 14px;
-    color: #7A7D76;
-    margin-left: 6px;
-  }
-
-  @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .plan-card.featured { margin: 0; } }
-  @media (max-width: 768px) { .plan-card { padding: 36px 24px; } }
-
-  .cta-section { padding: var(--section) var(--px); background: #1A1B19; border-top: 1px solid #2A2B28; }
-  .cta-inner { max-width: 640px; margin: 0 auto; text-align: center; }
-
-  footer { border-top: 1px solid #2A2B28; background: #111210; padding: 36px var(--px); }
-  .footer-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
-  }
-  .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
-  .footer-links a {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    color: #7A7D76; text-decoration: none; transition: color 0.2s;
-  }
-  .footer-links a:hover { color: #E4E2DF; }
-
-  .section-header { margin-bottom: 64px; }
+  /* Price counter */
+  .price-num { font-variant-numeric: tabular-nums; }
 </style>
 </head>
 
-<body>
+<body class="bg-bg text-text">
 
-<nav>
-  <div class="nav-inner">
-    <span class="nav-logo">LEVEL MUSIC</span>
-    <div class="nav-links">
-      <a href="#lecciones" class="active">Lecciones</a>
-      <a href="#metodo">Método</a>
-      <a href="#precios">Precios</a>
-      <a href="#comunidad">Comunidad</a>
+<!-- ─── NAV ── -->
+<nav class="sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur-md">
+  <div class="max-w-site mx-auto px-px max-[768px]:px-px-mobile h-16 flex items-center justify-between gap-6">
+    <span class="text-lg font-bold tracking-tight flex-shrink-0">LEVEL MUSIC</span>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex gap-10 items-center">
+      <a href="#lecciones" class="text-label text-accent no-underline uppercase tracking-widest text-[11px] font-bold border-b border-accent pb-0.5">Lecciones</a>
+      <a href="#metodo"    class="text-label text-muted hover:text-text transition-colors no-underline uppercase tracking-widest text-[11px] font-bold">Método</a>
+      <a href="#precios"   class="text-label text-muted hover:text-text transition-colors no-underline uppercase tracking-widest text-[11px] font-bold">Precios</a>
+      <a href="#comunidad" class="text-label text-muted hover:text-text transition-colors no-underline uppercase tracking-widest text-[11px] font-bold">Comunidad</a>
     </div>
-    <button class="btn-primary nav-cta">Empezar</button>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+
+    <button class="hidden md:block bg-cta text-bg text-[11px] font-bold tracking-widest uppercase px-6 py-3 border-none cursor-pointer hover:opacity-90 transition-opacity flex-shrink-0">
+      Empezar
+    </button>
+
+    <!-- Hamburger -->
+    <button id="navToggle" class="nav-toggle flex md:hidden flex-col gap-[5px] p-1 bg-transparent border-none cursor-pointer" aria-label="Abrir menú">
       <span></span><span></span><span></span>
     </button>
   </div>
-  <div class="nav-mobile" id="navMobile">
-    <a href="#lecciones" onclick="closeNav()">Lecciones</a>
-    <a href="#metodo" onclick="closeNav()">Método</a>
-    <a href="#precios" onclick="closeNav()">Precios</a>
-    <a href="#comunidad" onclick="closeNav()">Comunidad</a>
-    <button class="btn-primary" style="align-self:flex-start; margin-top:8px;">Empezar</button>
+
+  <!-- Mobile menu -->
+  <div id="navMobile" class="hidden flex-col bg-bg border-b border-border px-px-mobile py-6 gap-6">
+    <a href="#lecciones" onclick="closeNav()" class="text-[14px] font-bold tracking-[0.08em] uppercase text-muted hover:text-text transition-colors no-underline">Lecciones</a>
+    <a href="#metodo"    onclick="closeNav()" class="text-[14px] font-bold tracking-[0.08em] uppercase text-muted hover:text-text transition-colors no-underline">Método</a>
+    <a href="#precios"   onclick="closeNav()" class="text-[14px] font-bold tracking-[0.08em] uppercase text-muted hover:text-text transition-colors no-underline">Precios</a>
+    <a href="#comunidad" onclick="closeNav()" class="text-[14px] font-bold tracking-[0.08em] uppercase text-muted hover:text-text transition-colors no-underline">Comunidad</a>
+    <button class="self-start bg-cta text-bg text-[11px] font-bold tracking-widest uppercase px-6 py-3 border-none cursor-pointer mt-2">Empezar</button>
   </div>
 </nav>
 
 <main>
 
-<section id="lecciones" class="hero-section">
-  <div class="hero-inner">
+<!-- ─── HERO ── -->
+<section id="lecciones" class="relative border-b border-border overflow-hidden">
+  <!-- Imagen de fondo -->
+  <img src="guitar.jpg"
+       alt=""
+       aria-hidden="true"
+       class="absolute inset-0 w-full h-full object-cover object-center grayscale"
+       style="opacity:0.18;"
+       onerror="this.style.display='none'"/>
+  <!-- Gradiente: oscuro arriba y abajo para que el texto sea legible -->
+  <div class="absolute inset-0 pointer-events-none"
+       style="background: linear-gradient(to bottom, #111210 0%, rgba(17,18,16,0.55) 40%, rgba(17,18,16,0.55) 60%, #111210 100%);"></div>
+
+  <div class="relative z-10 max-w-site mx-auto px-px max-[768px]:px-px-mobile py-section max-[768px]:py-section-mobile min-h-[88vh] max-[768px]:min-h-[75vh] flex flex-col justify-center">
     <div class="reveal">
-      <p class="label-cap" style="margin-bottom:32px;">Guitar Education</p>
-      <h1 style="font-size:clamp(36px, 6vw, 72px); font-weight:700; line-height:1.05; letter-spacing:-0.025em; max-width:720px; margin-bottom:28px;">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-8">Guitar Education</p>
+      <h1 class="text-[clamp(36px,6vw,72px)] font-bold leading-[1.05] tracking-[-0.025em] max-w-[720px] mb-7">
         Toca mejor en 90 días,<br/>o te devolvemos el dinero.
       </h1>
-      <p style="font-size:clamp(16px, 2vw, 18px); line-height:1.7; color:#7A7D76; max-width:520px; margin-bottom:52px; font-weight:300;">
+      <p class="text-[clamp(16px,2vw,18px)] leading-[1.7] text-muted max-w-[520px] mb-12 font-light">
         Nuestro sistema de análisis de audio detecta exactamente qué estás haciendo mal y te dice cómo corregirlo. Sin suposiciones, sin "practica más".
       </p>
-      <button class="btn-primary" id="hero-cta">Ver mi plan de estudio</button>
-    </div>
-  </div>
-</section>
+      <button class="bg-cta text-bg text-[11px] font-bold tracking-widest uppercase px-9 py-4 border-none cursor-pointer hover:opacity-90 active:scale-[0.97] transition-all">
+        Ver mi plan de estudio
+      </button>
 
-<section class="logos-section">
-  <div class="logos-inner">
-    <p class="label-cap" style="color:#7A7D76; flex-shrink:0;">Alumnos que vienen de</p>
-    <div class="logos-list">
-      <span>Lima</span>
-      <span>Buenos Aires</span>
-      <span>Ciudad de México</span>
-      <span>Madrid</span>
-      <span>Bogotá</span>
-    </div>
-  </div>
-</section>
-
-<section class="img-break">
-  <div class="reveal img-placeholder">
-    <img src="guitar.jpg" alt="Guitarrista practicando en estudio">
-  </div>
-</section>
-
-<section id="metodo" class="benefits-section">
-  <div class="benefits-grid">
-    <div class="benefit-item reveal">
-      <p class="label-cap" style="margin-bottom:20px;">01</p>
-      <h3 style="font-size:22px; font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;">Método progresivo</h3>
-      <p style="font-size:16px; line-height:1.7; color:#7A7D76; font-weight:300;">
-        Un currículo que respeta los fundamentos clásicos mientras integra técnicas contemporáneas con rigor académico.
-      </p>
-    </div>
-    <div class="benefit-item reveal">
-      <p class="label-cap" style="margin-bottom:20px;">02</p>
-      <h3 style="font-size:22px; font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;">Feedback en tiempo real</h3>
-      <p style="font-size:16px; line-height:1.7; color:#7A7D76; font-weight:300;">
-        Análisis de audio que detecta cada matiz de tu ejecución y entrega corrección técnica instantánea.
-      </p>
-    </div>
-    <div class="benefit-item reveal">
-      <p class="label-cap" style="margin-bottom:20px;">03</p>
-      <h3 style="font-size:22px; font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;">Comunidad de expertos</h3>
-      <p style="font-size:16px; line-height:1.7; color:#7A7D76; font-weight:300;">
-        Masterclasses con guitarristas de reconocimiento internacional y foros de discusión activos.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="comunidad" class="testimonials-section">
-  <div style="max-width:var(--max); margin:0 auto;">
-    <div class="reveal section-header">
-      <p class="label-cap" style="margin-bottom:16px;">Lo que dicen nuestros alumnos</p>
-      <h2 style="font-size:clamp(22px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; max-width:480px;">
-        Resultados que hablan por sí solos.
-      </h2>
-    </div>
-    <div class="reveal testimonials-grid">
-      <div class="testimonial-card">
-        <p style="font-size:17px; line-height:1.7; color:#C8C6C3; font-weight:300; margin-bottom:28px;">
-          "En seis meses pasé de no saber leer una partitura a tocar piezas de nivel intermedio. La estructura del método es impecable."
-        </p>
-        <p style="font-size:14px; font-weight:700; letter-spacing:-0.01em; margin-bottom:4px;">Martina Ríos</p>
-        <p class="label-cap" style="color:#7A7D76; font-size:10px;">Guitarra clásica · Nivel intermedio</p>
-      </div>
-      <div class="testimonial-card">
-        <p style="font-size:17px; line-height:1.7; color:#C8C6C3; font-weight:300; margin-bottom:28px;">
-          "El feedback de audio me dio lo que ningún profesor presencial había podido darme: objetividad sobre mi técnica de púa."
-        </p>
-        <p style="font-size:14px; font-weight:700; letter-spacing:-0.01em; margin-bottom:4px;">Diego Almeida</p>
-        <p class="label-cap" style="color:#7A7D76; font-size:10px;">Guitarra eléctrica · Nivel avanzado</p>
-      </div>
-      <div class="testimonial-card">
-        <p style="font-size:17px; line-height:1.7; color:#C8C6C3; font-weight:300; margin-bottom:28px;">
-          "Las masterclasses con artistas internacionales valen por sí solas todo el precio de la suscripción. Acceso que antes era impensable."
-        </p>
-        <p style="font-size:14px; font-weight:700; letter-spacing:-0.01em; margin-bottom:4px;">Sofía Mendoza</p>
-        <p class="label-cap" style="color:#7A7D76; font-size:10px;">Guitarra acústica · Nivel principiante</p>
+      <!-- Stats row — ancla visual en la parte baja del hero -->
+      <div class="flex gap-12 max-[768px]:gap-8 mt-20 max-[768px]:mt-14 pt-10 border-t border-border flex-wrap">
+        <div>
+          <p class="text-[clamp(28px,3vw,36px)] font-bold tracking-[-0.03em] leading-none mb-1">+1.200</p>
+          <p class="text-[11px] font-bold tracking-widest uppercase text-muted">Alumnos activos</p>
+        </div>
+        <div>
+          <p class="text-[clamp(28px,3vw,36px)] font-bold tracking-[-0.03em] leading-none mb-1">90 días</p>
+          <p class="text-[11px] font-bold tracking-widest uppercase text-muted">Garantía de resultado</p>
+        </div>
+        <div>
+          <p class="text-[clamp(28px,3vw,36px)] font-bold tracking-[-0.03em] leading-none mb-1">120</p>
+          <p class="text-[11px] font-bold tracking-widest uppercase text-muted">Lecciones estructuradas</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="bento-section">
-  <div class="reveal bento-grid">
-    <div class="bento-text">
-      <p class="label-cap" style="margin-bottom:20px;">El currículo</p>
-      <h2 style="font-size:clamp(24px, 3.5vw, 42px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
-        Explora el mástil con precisión matemática.
-      </h2>
-      <p style="font-size:16px; line-height:1.7; color:#7A7D76; max-width:420px; font-weight:300;">
-        Nuestros módulos eliminan la ambigüedad del aprendizaje. Domina teoría y práctica con una estructura que avanza sin dejar vacíos.
-      </p>
+<!-- ─── PRUEBA SOCIAL ── -->
+<section class="bg-surface2 border-b border-border px-px max-[768px]:px-px-mobile py-7">
+  <div class="max-w-site mx-auto flex items-center gap-12 max-[768px]:gap-5 flex-wrap">
+    <p class="text-[11px] font-bold tracking-widest uppercase text-muted flex-shrink-0">Alumnos que vienen de</p>
+    <div class="flex gap-12 max-[768px]:gap-7 items-center opacity-30 flex-wrap">
+      <span class="text-[13px] font-bold tracking-[0.08em] text-text">Lima</span>
+      <span class="text-[13px] font-bold tracking-[0.08em] text-text">Buenos Aires</span>
+      <span class="text-[13px] font-bold tracking-[0.08em] text-text">Ciudad de México</span>
+      <span class="text-[13px] font-bold tracking-[0.08em] text-text">Madrid</span>
+      <span class="text-[13px] font-bold tracking-[0.08em] text-text">Bogotá</span>
     </div>
-    <div class="bento-img">
-      <img src="mastil.jpg" alt="Detalle del mástil de guitarra">
+  </div>
+</section>
+
+<!-- ─── BENEFITS ── -->
+<section id="metodo" class="bg-surface2 border-t border-b border-border px-px max-[768px]:px-px-mobile py-section max-[768px]:py-section-mobile">
+  <div class="max-w-site mx-auto grid grid-cols-3 max-[768px]:grid-cols-1">
+
+    <div class="reveal pr-12 border-r border-border max-[768px]:pr-0 max-[768px]:border-r-0 max-[768px]:border-b max-[768px]:pb-9 max-[768px]:mb-0">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-5">01</p>
+      <h3 class="text-[22px] font-bold tracking-[-0.01em] mb-4">Método progresivo</h3>
+      <p class="text-base leading-[1.7] text-muted font-light">Un currículo que respeta los fundamentos clásicos mientras integra técnicas contemporáneas con rigor académico.</p>
     </div>
+
+    <div class="reveal px-12 border-r border-border max-[768px]:px-0 max-[768px]:border-r-0 max-[768px]:border-b max-[768px]:py-9">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-5">02</p>
+      <h3 class="text-[22px] font-bold tracking-[-0.01em] mb-4">Feedback en tiempo real</h3>
+      <p class="text-base leading-[1.7] text-muted font-light">Análisis de audio que detecta cada matiz de tu ejecución y entrega corrección técnica instantánea.</p>
+    </div>
+
+    <div class="reveal pl-12 max-[768px]:pl-0 max-[768px]:pt-9">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-5">03</p>
+      <h3 class="text-[22px] font-bold tracking-[-0.01em] mb-4">Comunidad de expertos</h3>
+      <p class="text-base leading-[1.7] text-muted font-light">Masterclasses con guitarristas de reconocimiento internacional y foros de discusión activos.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── TESTIMONIOS ──
+  ⚠️  Reemplaza con testimonios reales antes de publicar.
+      Si no los tienes aún, comenta o elimina esta sección.
+-->
+<section id="comunidad" class="bg-bg px-px max-[768px]:px-px-mobile py-section max-[768px]:py-section-mobile">
+  <div class="max-w-site mx-auto">
+    <div class="reveal mb-16">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-4">Lo que dicen nuestros alumnos</p>
+      <h2 class="text-[clamp(22px,3vw,38px)] font-bold leading-[1.1] tracking-[-0.02em] max-w-[480px]">Resultados que hablan por sí solos.</h2>
+    </div>
+    <div class="reveal grid grid-cols-3 max-[768px]:grid-cols-1 gap-12 max-[768px]:gap-10">
+
+      <div class="border-l-2 border-accent pl-7">
+        <p class="text-[17px] leading-[1.7] text-[#C8C6C3] font-light mb-7">"En seis meses pasé de no saber leer una partitura a tocar piezas de nivel intermedio. La estructura del método es impecable."</p>
+        <p class="text-sm font-bold tracking-[-0.01em] mb-1">Martina Ríos</p>
+        <p class="text-[10px] font-bold tracking-widest uppercase text-muted">Guitarra clásica · Nivel intermedio</p>
+      </div>
+
+      <div class="border-l-2 border-accent pl-7">
+        <p class="text-[17px] leading-[1.7] text-[#C8C6C3] font-light mb-7">"El feedback de audio me dio lo que ningún profesor presencial había podido darme: objetividad sobre mi técnica de púa."</p>
+        <p class="text-sm font-bold tracking-[-0.01em] mb-1">Diego Almeida</p>
+        <p class="text-[10px] font-bold tracking-widest uppercase text-muted">Guitarra eléctrica · Nivel avanzado</p>
+      </div>
+
+      <div class="border-l-2 border-accent pl-7">
+        <p class="text-[17px] leading-[1.7] text-[#C8C6C3] font-light mb-7">"Las masterclasses con artistas internacionales valen por sí solas todo el precio de la suscripción. Acceso que antes era impensable."</p>
+        <p class="text-sm font-bold tracking-[-0.01em] mb-1">Sofía Mendoza</p>
+        <p class="text-[10px] font-bold tracking-widest uppercase text-muted">Guitarra acústica · Nivel principiante</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── BENTO (Currículo) ── -->
+<section class="bg-bg border-t border-b border-border py-section max-[768px]:py-section-mobile">
+  <div class="max-w-site mx-auto px-px max-[768px]:px-px-mobile">
+  <div class="reveal grid grid-cols-[7fr_5fr] max-[768px]:grid-cols-1 border border-border" style="gap:1px; background:#2A2B28;">
+
+    <div class="bg-bg p-16 max-[768px]:p-7 flex flex-col justify-end min-h-[480px] max-[768px]:min-h-0">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-5">El currículo</p>
+      <h2 class="text-[clamp(24px,3.5vw,42px)] font-bold leading-[1.1] tracking-[-0.02em] mb-5">Explora el mástil con precisión matemática.</h2>
+      <p class="text-base leading-[1.7] text-muted font-light max-w-[420px]">Nuestros módulos eliminan la ambigüedad del aprendizaje. Domina teoría y práctica con una estructura que avanza sin dejar vacíos.</p>
+    </div>
+
+    <div class="bg-surface min-h-[480px] max-[768px]:min-h-[220px] flex items-center justify-center overflow-hidden">
+      <img src="mastil.jpg" class="w-full h-full object-cover opacity-85" alt="Detalle del mástil de guitarra" onerror="this.style.display='none'; this.parentElement.style.background='#1A1B19'">
+    </div>
+
   </div>
 </section>
 
 <!-- ─── PRECIOS ── -->
-<section id="precios" class="pricing-section">
-  <div style="max-width:var(--max); margin:0 auto;">
+<section id="precios" class="bg-surface2 border-t border-border px-px max-[768px]:px-px-mobile py-section max-[768px]:py-section-mobile">
+  <div class="max-w-site mx-auto">
 
-    <div class="reveal section-header">
-      <p class="label-cap" style="margin-bottom:16px;">Planes</p>
-      <h2 style="font-size:clamp(22px, 3vw, 38px); font-weight:700; line-height:1.1; letter-spacing:-0.02em;">
-        Elige tu nivel de compromiso.
-      </h2>
+    <div class="reveal mb-16">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-4">Planes</p>
+      <h2 class="text-[clamp(22px,3vw,38px)] font-bold leading-[1.1] tracking-[-0.02em]">Elige tu nivel de compromiso.</h2>
     </div>
 
-    <div class="reveal pricing-grid" id="pricing-grid">
+    <div id="pricing-grid" class="reveal grid grid-cols-3 max-[900px]:grid-cols-1">
 
       <!-- Esencial -->
-      <div class="plan-card">
-        <p class="label-cap" style="margin-bottom:16px;">Esencial</p>
-        <div class="price-display">
-          <span class="price-currency">S/</span>
-          <!-- data-target: valor final. data-duration: ms. data-suffix: texto después del número -->
-          <span class="price-number" data-counter data-target="59" data-duration="1600" data-suffix="">0</span>
-          <span class="price-period">/ mes</span>
+      <div class="bg-surface2 border border-border p-12 max-[768px]:p-9 flex flex-col">
+        <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-4">Esencial</p>
+        <div class="flex items-baseline gap-0 mb-8">
+          <span class="text-[22px] font-bold self-start mt-2 mr-0.5">S/</span>
+          <span class="text-[40px] font-bold tracking-[-0.03em] price-num" data-counter data-target="59" data-duration="1600">0</span>
+          <span class="text-sm text-muted ml-1.5">/ mes</span>
         </div>
-        <div style="margin-bottom:36px; flex:1;">
-          <div class="plan-feature"><span class="check">✓</span>Currículo completo (120 lecciones)</div>
-          <div class="plan-feature"><span class="check">✓</span>Análisis de audio básico (5 / mes)</div>
-          <div class="plan-feature"><span class="check">✓</span>Foro de la comunidad</div>
-          <div class="plan-feature disabled"><span style="color:#3A3B38;">–</span>&nbsp;Masterclasses en vivo</div>
-          <div class="plan-feature disabled"><span style="color:#3A3B38;">–</span>&nbsp;Feedback de instructores</div>
+        <div class="flex-1 mb-9">
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Currículo completo (120 lecciones)</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Análisis de audio básico (5 / mes)</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Foro de la comunidad</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-subtle font-light leading-snug"><span class="text-subtle flex-shrink-0 mt-0.5">–</span>Masterclasses en vivo</div>
+          <div class="flex items-start gap-3 py-2.5 text-[15px] text-subtle font-light leading-snug"><span class="text-subtle flex-shrink-0 mt-0.5">–</span>Feedback de instructores</div>
         </div>
-        <button class="btn-ghost" style="width:100%; text-align:center;">Comenzar</button>
+        <button class="w-full bg-surface text-text text-[11px] font-bold tracking-widest uppercase py-4 border border-border cursor-pointer hover:border-muted transition-colors">Comenzar</button>
       </div>
 
       <!-- Pro (featured) -->
-      <div class="plan-card featured">
-        <div style="margin-bottom:20px;">
-          <span class="label-cap" style="background:#B4C9AC; color:#0E1610; padding:4px 10px; font-size:10px;">Recomendado</span>
+      <div class="bg-surface2 border-2 border-accent p-12 max-[768px]:p-9 flex flex-col">
+        <div class="mb-5">
+          <span class="bg-accent text-bg text-[10px] font-bold tracking-widest uppercase px-2.5 py-1">Recomendado</span>
         </div>
-        <p class="label-cap" style="margin-bottom:16px;">Pro</p>
-        <div class="price-display">
-          <span class="price-currency">S/</span>
-          <span class="price-number" data-counter data-target="129" data-duration="1800" data-suffix="">0</span>
-          <span class="price-period">/ mes</span>
+        <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-4">Pro</p>
+        <div class="flex items-baseline gap-0 mb-8">
+          <span class="text-[22px] font-bold self-start mt-2 mr-0.5">S/</span>
+          <span class="text-[40px] font-bold tracking-[-0.03em] price-num" data-counter data-target="129" data-duration="1800">0</span>
+          <span class="text-sm text-muted ml-1.5">/ mes</span>
         </div>
-        <div style="margin-bottom:36px; flex:1;">
-          <div class="plan-feature"><span class="check">✓</span>Todo lo del plan Esencial</div>
-          <div class="plan-feature"><span class="check">✓</span>Análisis de audio ilimitado</div>
-          <div class="plan-feature"><span class="check">✓</span>2 masterclasses en vivo por mes</div>
-          <div class="plan-feature"><span class="check">✓</span>Feedback semanal de instructores</div>
-          <div class="plan-feature"><span class="check">✓</span>Certificado de nivel por módulo</div>
+        <div class="flex-1 mb-9">
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Todo lo del plan Esencial</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Análisis de audio ilimitado</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>2 masterclasses en vivo por mes</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Feedback semanal de instructores</div>
+          <div class="flex items-start gap-3 py-2.5 text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Certificado de nivel por módulo</div>
         </div>
-        <button class="btn-primary" style="width:100%; text-align:center;">Comenzar</button>
+        <button class="w-full bg-cta text-bg text-[11px] font-bold tracking-widest uppercase py-4 border-none cursor-pointer hover:opacity-90 transition-opacity">Comenzar</button>
       </div>
 
       <!-- Maestro -->
-      <div class="plan-card">
-        <p class="label-cap" style="margin-bottom:16px;">Maestro</p>
-        <div class="price-display">
-          <span class="price-currency">S/</span>
-          <span class="price-number" data-counter data-target="199" data-duration="2000" data-suffix="">0</span>
-          <span class="price-period">/ mes</span>
+      <div class="bg-surface2 border border-border p-12 max-[768px]:p-9 flex flex-col">
+        <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-4">Maestro</p>
+        <div class="flex items-baseline gap-0 mb-8">
+          <span class="text-[22px] font-bold self-start mt-2 mr-0.5">S/</span>
+          <span class="text-[40px] font-bold tracking-[-0.03em] price-num" data-counter data-target="199" data-duration="2000">0</span>
+          <span class="text-sm text-muted ml-1.5">/ mes</span>
         </div>
-        <div style="margin-bottom:36px; flex:1;">
-          <div class="plan-feature"><span class="check">✓</span>Todo lo del plan Pro</div>
-          <div class="plan-feature"><span class="check">✓</span>1 clase privada mensual con instructor</div>
-          <div class="plan-feature"><span class="check">✓</span>Acceso prioritario a nuevos cursos</div>
-          <div class="plan-feature"><span class="check">✓</span>Canal privado con artistas invitados</div>
-          <div class="plan-feature"><span class="check">✓</span>Acceso de por vida al material descargado</div>
+        <div class="flex-1 mb-9">
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Todo lo del plan Pro</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>1 clase privada mensual con instructor</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Acceso prioritario a nuevos cursos</div>
+          <div class="flex items-start gap-3 py-2.5 border-b border-border text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Canal privado con artistas invitados</div>
+          <div class="flex items-start gap-3 py-2.5 text-[15px] text-[#C8C6C3] font-light leading-snug"><span class="text-accent flex-shrink-0 mt-0.5">✓</span>Acceso de por vida al material descargado</div>
         </div>
-        <button class="btn-ghost" style="width:100%; text-align:center;">Comenzar</button>
+        <button class="w-full bg-surface text-text text-[11px] font-bold tracking-widest uppercase py-4 border border-border cursor-pointer hover:border-muted transition-colors">Comenzar</button>
       </div>
 
     </div>
+    <p class="text-center mt-6 text-sm text-muted font-light">Sin contratos. Cancela cuando quieras.</p>
 
-    <p style="text-align:center; margin-top:24px; font-size:14px; color:#7A7D76; font-weight:300;">
-      Sin contratos. Cancela cuando quieras.
-    </p>
   </div>
 </section>
 
-<section style="background:#111210; border-top:1px solid #2A2B28;">
-  <div id="cta-grid" style="max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; padding:var(--section) var(--px);">
+<!-- ─── FAQ ── -->
+<section class="bg-bg border-t border-border px-px max-[768px]:px-px-mobile py-section max-[768px]:py-section-mobile">
+  <div class="max-w-[720px] mx-auto">
 
-    <!-- Columna izquierda -->
-    <div class="reveal" style="padding-top:8px;">
-      <p class="label-cap" style="margin-bottom:24px;">Reserva tu lugar</p>
-      <h2 style="font-size:clamp(32px, 4vw, 54px); font-weight:700; line-height:1.05; letter-spacing:-0.025em; margin-bottom:24px;">
-        &iquest;Listo para<br/>tocar mejor?
+    <div class="reveal mb-16">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-4">Preguntas frecuentes</p>
+      <h2 class="text-[clamp(22px,3vw,38px)] font-bold leading-[1.1] tracking-[-0.02em]">Todo lo que necesitas saber.</h2>
+    </div>
+
+    <div class="reveal">
+      <div class="faq-item border-b border-border">
+        <button onclick="toggleFaq(this)" class="faq-trigger w-full bg-transparent border-none text-text text-left text-[17px] max-[768px]:text-[15px] font-normal py-6 flex justify-between items-center gap-6 cursor-pointer hover:text-accent transition-colors">
+          ¿Necesito tener guitarra propia para empezar?
+          <span class="faq-icon text-muted text-xl flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="pb-6 text-base leading-[1.7] text-muted font-light">Sí, necesitas una guitarra acústica o eléctrica. No importa la marca ni el valor — el método funciona con cualquier instrumento en condiciones básicas de afinación.</p>
+        </div>
+      </div>
+      <div class="faq-item border-b border-border">
+        <button onclick="toggleFaq(this)" class="faq-trigger w-full bg-transparent border-none text-text text-left text-[17px] max-[768px]:text-[15px] font-normal py-6 flex justify-between items-center gap-6 cursor-pointer hover:text-accent transition-colors">
+          ¿Qué nivel necesito para comenzar?
+          <span class="faq-icon text-muted text-xl flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="pb-6 text-base leading-[1.7] text-muted font-light">Ninguno. El currículo arranca desde cero absoluto y tiene rutas diferenciadas para quienes ya tienen experiencia. Al registrarte, un diagnóstico breve adapta tu punto de entrada.</p>
+        </div>
+      </div>
+      <div class="faq-item border-b border-border">
+        <button onclick="toggleFaq(this)" class="faq-trigger w-full bg-transparent border-none text-text text-left text-[17px] max-[768px]:text-[15px] font-normal py-6 flex justify-between items-center gap-6 cursor-pointer hover:text-accent transition-colors">
+          ¿Cómo funciona el análisis de audio?
+          <span class="faq-icon text-muted text-xl flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="pb-6 text-base leading-[1.7] text-muted font-light">Grabas tu ejecución en la plataforma o cargas un archivo de audio. El sistema analiza afinación, tempo, dinámica y articulación, y devuelve un reporte con observaciones específicas por compás.</p>
+        </div>
+      </div>
+      <div class="faq-item border-b border-border">
+        <button onclick="toggleFaq(this)" class="faq-trigger w-full bg-transparent border-none text-text text-left text-[17px] max-[768px]:text-[15px] font-normal py-6 flex justify-between items-center gap-6 cursor-pointer hover:text-accent transition-colors">
+          ¿Cuánto tiempo debo dedicar por semana?
+          <span class="faq-icon text-muted text-xl flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="pb-6 text-base leading-[1.7] text-muted font-light">El progreso sostenido se da con 4 a 6 horas semanales en sesiones de 45–60 minutos. El avance es completamente a tu ritmo.</p>
+        </div>
+      </div>
+      <div class="faq-item border-b border-border">
+        <button onclick="toggleFaq(this)" class="faq-trigger w-full bg-transparent border-none text-text text-left text-[17px] max-[768px]:text-[15px] font-normal py-6 flex justify-between items-center gap-6 cursor-pointer hover:text-accent transition-colors">
+          ¿Puedo cancelar en cualquier momento?
+          <span class="faq-icon text-muted text-xl flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="pb-6 text-base leading-[1.7] text-muted font-light">Sí, sin penalizaciones. La cancelación es efectiva al final del período facturado. Puedes descargar las notas de las lecciones que hayas completado.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="faq-trigger w-full bg-transparent border-none text-text text-left text-[17px] max-[768px]:text-[15px] font-normal py-6 flex justify-between items-center gap-6 cursor-pointer hover:text-accent transition-colors">
+          ¿Las masterclasses quedan grabadas?
+          <span class="faq-icon text-muted text-xl flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="pb-6 text-base leading-[1.7] text-muted font-light">Todas quedan disponibles dentro de las 48 horas posteriores a la sesión en vivo. Los suscriptores Pro y Maestro tienen acceso permanente al archivo histórico.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CTA FINAL CON FORMULARIO ── -->
+<section class="bg-bg border-t border-border px-px max-[768px]:px-px-mobile py-section max-[768px]:py-section-mobile">
+  <div class="max-w-site mx-auto grid grid-cols-2 max-[768px]:grid-cols-1 gap-20 max-[768px]:gap-12 items-start">
+
+    <!-- Columna izquierda: copy -->
+    <div class="reveal pt-2">
+      <p class="text-[11px] font-bold tracking-widest uppercase text-accent mb-6">Reserva tu lugar</p>
+      <h2 class="text-[clamp(32px,4vw,54px)] font-bold leading-[1.05] tracking-[-0.025em] mb-6">
+        ¿Listo para<br/>tocar mejor?
       </h2>
-      <p style="font-size:16px; line-height:1.7; color:#7A7D76; margin-bottom:40px; font-weight:300;">
+      <p class="text-base leading-[1.7] text-muted font-light mb-10">
         Completa el formulario y te confirmamos tu plan de estudio en menos de 24 horas.
       </p>
-      <ul style="list-style:none; display:flex; flex-direction:column; gap:16px; margin-bottom:40px;">
-        <li style="display:flex; align-items:center; gap:14px; font-size:15px; color:#7A7D76; font-weight:300;">
-          <span style="width:20px; height:1px; background:#B4C9AC; flex-shrink:0; display:block;"></span>Sin pagos anticipados
+      <ul class="flex flex-col gap-4 mb-10 list-none">
+        <li class="flex items-center gap-3.5 text-[15px] text-muted font-light">
+          <span class="w-5 h-px bg-accent flex-shrink-0"></span>Sin pagos anticipados
         </li>
-        <li style="display:flex; align-items:center; gap:14px; font-size:15px; color:#7A7D76; font-weight:300;">
-          <span style="width:20px; height:1px; background:#B4C9AC; flex-shrink:0; display:block;"></span>Cancela cuando quieras
+        <li class="flex items-center gap-3.5 text-[15px] text-muted font-light">
+          <span class="w-5 h-px bg-accent flex-shrink-0"></span>Cancela cuando quieras
         </li>
-        <li style="display:flex; align-items:center; gap:14px; font-size:15px; color:#7A7D76; font-weight:300;">
-          <span style="width:20px; height:1px; background:#B4C9AC; flex-shrink:0; display:block;"></span>Confirmaci&oacute;n por WhatsApp
+        <li class="flex items-center gap-3.5 text-[15px] text-muted font-light">
+          <span class="w-5 h-px bg-accent flex-shrink-0"></span>Confirmación por WhatsApp
         </li>
       </ul>
-      <p class="label-cap" style="color:#7A7D76; cursor:pointer; display:flex; align-items:center; gap:10px; transition:color 0.2s;"
-         onmouseover="this.style.color='#E4E2DF'" onmouseout="this.style.color='#7A7D76'">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      <p class="text-[11px] font-bold tracking-widest uppercase text-muted flex items-center gap-2.5 cursor-pointer hover:text-text transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
-        O escr&iacute;benos por WhatsApp
+        O escríbenos directo por WhatsApp
       </p>
     </div>
 
     <!-- Columna derecha: formulario -->
     <div class="reveal">
-      <div style="background:#1A1B19; border:1px solid #2A2B28; padding:48px;">
+      <div class="bg-surface border border-border p-14 max-[768px]:p-7">
 
+        <!-- Form -->
         <form id="contact-form" novalidate>
 
-          <div style="margin-bottom:22px;">
-            <label for="nombre" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
-              Nombre completo <span style="color:#5A5B58;">*</span>
+          <div class="mb-6">
+            <label for="nombre" class="block text-[11px] font-bold tracking-widest uppercase text-accent mb-2.5">
+              Nombre completo <span class="text-subtle font-normal">*</span>
             </label>
             <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required
-              style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
-                     font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
-                     padding:14px 16px; outline:none; transition:border-color 0.2s; box-sizing:border-box;"
-              onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'"/>
+              class="w-full bg-bg border border-border text-text font-sans text-[15px] font-light px-4 py-3.5 transition-colors duration-200 focus:border-accent"
+              style="outline:none;"/>
           </div>
 
-          <div style="margin-bottom:22px;">
-            <label for="telefono" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
-              WhatsApp / Tel&eacute;fono <span style="color:#5A5B58;">*</span>
+          <div class="mb-6">
+            <label for="telefono" class="block text-[11px] font-bold tracking-widest uppercase text-accent mb-2.5">
+              WhatsApp / Teléfono <span class="text-subtle font-normal">*</span>
             </label>
             <input type="tel" id="telefono" name="telefono" placeholder="+51 999 999 999" required
-              style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
-                     font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
-                     padding:14px 16px; outline:none; transition:border-color 0.2s; box-sizing:border-box;"
-              onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'"/>
+              class="w-full bg-bg border border-border text-text font-sans text-[15px] font-light px-4 py-3.5 transition-colors duration-200 focus:border-accent"
+              style="outline:none;"/>
           </div>
 
-          <div style="margin-bottom:22px;">
-            <label for="servicio" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
-              Servicio <span style="color:#5A5B58;">*</span>
+          <div class="mb-6">
+            <label for="servicio" class="block text-[11px] font-bold tracking-widest uppercase text-accent mb-2.5">
+              Servicio <span class="text-subtle font-normal">*</span>
             </label>
-            <div style="position:relative;">
+            <div class="relative">
               <select id="servicio" name="servicio" required
-                style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
-                       font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
-                       padding:14px 40px 14px 16px; outline:none; transition:border-color 0.2s;
-                       -webkit-appearance:none; appearance:none; cursor:pointer; box-sizing:border-box;"
-                onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'">
-                <option value="" disabled selected>Selecciona un plan</option>
-                <option value="Esencial - S/59/mes">Esencial &mdash; S/59 / mes</option>
-                <option value="Pro - S/129/mes">Pro &mdash; S/129 / mes</option>
-                <option value="Maestro - S/199/mes">Maestro &mdash; S/199 / mes</option>
+                class="w-full bg-bg border border-border text-text font-sans text-[15px] font-light px-4 py-3.5 pr-10 transition-colors duration-200 focus:border-accent cursor-pointer"
+                style="outline:none;">
+                <option value="" disabled selected class="text-muted">Selecciona un plan</option>
+                <option value="Esencial - S/59/mes">Esencial — S/59 / mes</option>
+                <option value="Pro - S/129/mes">Pro — S/129 / mes</option>
+                <option value="Maestro - S/199/mes">Maestro — S/199 / mes</option>
               </select>
-              <span style="position:absolute; right:16px; top:50%; transform:translateY(-50%); pointer-events:none; color:#7A7D76; font-size:10px;">&#9660;</span>
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted text-[10px]">▼</span>
             </div>
           </div>
 
-          <div style="margin-bottom:28px;">
-            <label for="mensaje" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#B4C9AC; margin-bottom:10px;">
-              Mensaje <span style="font-size:11px; font-weight:300; letter-spacing:0; text-transform:none; color:#5A5B58;">(opcional)</span>
+          <div class="mb-8">
+            <label for="mensaje" class="block text-[11px] font-bold tracking-widest uppercase text-accent mb-2.5">
+              Mensaje <span class="text-[11px] font-light tracking-normal normal-case text-subtle">(opcional)</span>
             </label>
-            <textarea id="mensaje" name="mensaje" placeholder="&iquest;Alguna preferencia o consulta?" rows="4"
-              style="width:100%; background:#111210; border:1px solid #2A2B28; color:#E4E2DF;
-                     font-family:'Geist',sans-serif; font-size:15px; font-weight:300;
-                     padding:14px 16px; outline:none; transition:border-color 0.2s;
-                     resize:vertical; min-height:100px; box-sizing:border-box;"
-              onfocus="this.style.borderColor='#B4C9AC'" onblur="this.style.borderColor='#2A2B28'"></textarea>
+            <textarea id="mensaje" name="mensaje" placeholder="¿Alguna preferencia o consulta?" rows="4"
+              class="w-full bg-bg border border-border text-text font-sans text-[15px] font-light px-4 py-3.5 transition-colors duration-200 focus:border-accent resize-y min-h-[100px]"
+              style="outline:none;"></textarea>
           </div>
 
-          <p id="form-error" style="display:none; font-size:13px; color:#CF6679; margin-bottom:16px; font-weight:300; line-height:1.5;"></p>
+          <p id="form-error" class="hidden text-[13px] text-error font-light leading-relaxed mb-4"></p>
 
           <button type="submit" id="submit-btn"
-            style="width:100%; background:#EDEAE5; color:#111210;
-                   font-family:'Geist',sans-serif; font-size:11px; font-weight:700;
-                   letter-spacing:0.12em; text-transform:uppercase;
-                   padding:18px 36px; border:none; cursor:pointer; transition:opacity 0.2s ease;">
+            class="w-full bg-cta text-bg text-[11px] font-bold tracking-widest uppercase py-[18px] border-none cursor-pointer hover:opacity-90 transition-opacity">
             Reservar ahora
           </button>
 
         </form>
 
-        <div id="success-msg" style="display:none; text-align:center; padding:32px 16px; opacity:0; transition:opacity 0.5s ease;">
-          <div style="width:52px; height:52px; border-radius:50%; background:#192B1C; border:1px solid #3D6644;
-                      display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
-            <span style="color:#7EC88A; font-size:22px; line-height:1;">&#10003;</span>
+        <!-- Éxito -->
+        <div id="success-msg" class="hidden text-center py-8" style="opacity:0; transition:opacity 0.5s ease;">
+          <div class="w-[52px] h-[52px] rounded-full bg-success-bg border border-success-border flex items-center justify-center mx-auto mb-5">
+            <span class="text-success text-xl leading-none">✓</span>
           </div>
-          <h3 style="font-size:20px; font-weight:700; letter-spacing:-0.01em; margin-bottom:12px; color:#E4E2DF;">
-            &iexcl;Reserva recibida!
-          </h3>
-          <p style="font-size:15px; line-height:1.7; color:#7A7D76; font-weight:300;">
+          <h3 class="text-xl font-bold tracking-[-0.01em] mb-3">¡Reserva recibida!</h3>
+          <p class="text-[15px] leading-[1.7] text-muted font-light">
             Te confirmamos tu plan en menos de<br/>24 horas por WhatsApp.
           </p>
         </div>
@@ -625,111 +531,87 @@
 
 </main>
 
-<footer>
-  <div class="footer-inner">
+<!-- ─── FOOTER ── -->
+<footer class="border-t border-border bg-bg px-px max-[768px]:px-px-mobile py-9">
+  <div class="max-w-site mx-auto flex justify-between items-center flex-wrap gap-6">
     <div>
-      <span style="font-size:16px; font-weight:700; letter-spacing:-0.01em;">LEVEL MUSIC</span>
-      <p style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#7A7D76; margin-top:8px;">
-        © 2024 Level Music. The disciplined craft of guitar.
-      </p>
+      <span class="text-base font-bold tracking-[-0.01em]">LEVEL MUSIC</span>
+      <p class="text-[10px] font-bold tracking-widest uppercase text-muted mt-2">© 2024 Level Music. The disciplined craft of guitar.</p>
     </div>
-    <div class="footer-links">
-      <a href="#">Términos</a>
-      <a href="#">Privacidad</a>
-      <a href="#">Soporte</a>
-      <a href="#">Instagram</a>
+    <div class="flex gap-8 flex-wrap">
+      <a href="#" class="text-[10px] font-bold tracking-widest uppercase text-muted hover:text-text transition-colors no-underline">Términos</a>
+      <a href="#" class="text-[10px] font-bold tracking-widest uppercase text-muted hover:text-text transition-colors no-underline">Privacidad</a>
+      <a href="#" class="text-[10px] font-bold tracking-widest uppercase text-muted hover:text-text transition-colors no-underline">Soporte</a>
+      <a href="#" class="text-[10px] font-bold tracking-widest uppercase text-muted hover:text-text transition-colors no-underline">Instagram</a>
     </div>
   </div>
 </footer>
 
 <script>
-  /* ─────────────────────────────────────────────────────────────
-     CONTADORES ANIMADOS
-     - Usa requestAnimationFrame, sin librerías
-     - Easing: easeOutQuart — arranca rápido, desacelera al final
-     - Se activa una sola vez (el observer se desconecta tras disparar)
-     - data-target: número final
-     - data-duration: duración en ms (1600–2000)
-     - data-suffix: texto que se añade al terminar (ej: "+")
-  ───────────────────────────────────────────────────────────── */
+  /* ── Scroll reveal ── */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.18 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  function easeOutQuart(t) {
-    return 1 - Math.pow(1 - t, 4);
-  }
-
+  /* ── Contadores animados ── */
+  function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
   function animateCounter(el) {
     const target   = parseInt(el.dataset.target, 10);
     const duration = parseInt(el.dataset.duration, 10);
-    const suffix   = el.dataset.suffix || '';
     const start    = performance.now();
-
     function tick(now) {
-      const elapsed  = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased    = easeOutQuart(progress);
-      const current  = Math.round(eased * target);
-
-      el.textContent = current + (progress === 1 ? suffix : '');
-
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      }
+      const progress = Math.min((now - start) / duration, 1);
+      el.textContent = Math.round(easeOutQuart(progress) * target);
+      if (progress < 1) requestAnimationFrame(tick);
     }
-
     requestAnimationFrame(tick);
   }
-
-  // Observa el contenedor de precios — cuando entra en viewport,
-  // lanza todos los contadores y desconecta el observer (una sola vez).
   const pricingGrid = document.getElementById('pricing-grid');
-
-  const counterObserver = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Pequeño delay escalonado por plan: 0ms, 150ms, 300ms
-          document.querySelectorAll('[data-counter]').forEach((el, i) => {
-            setTimeout(() => animateCounter(el), i * 150);
-          });
-          obs.disconnect(); // nunca más se vuelve a activar
-        }
-      });
-    },
-    { threshold: 0.3 } // se activa cuando el 30% del grid es visible
-  );
-
-  counterObserver.observe(pricingGrid);
-
-  /* ── Scroll reveal ── */
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+  const counterObs  = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('[data-counter]').forEach((el, i) => {
+          setTimeout(() => animateCounter(el), i * 150);
+        });
+        obs.disconnect();
+      }
     });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  }, { threshold: 0.3 });
+  counterObs.observe(pricingGrid);
+
+  /* ── FAQ ── */
+  function toggleFaq(trigger) {
+    const item   = trigger.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
 
   /* ── Mobile nav ── */
   const toggle     = document.getElementById('navToggle');
   const mobileMenu = document.getElementById('navMobile');
   toggle.addEventListener('click', () => {
     toggle.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
+    mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('flex');
   });
   function closeNav() {
     toggle.classList.remove('open');
-    mobileMenu.classList.remove('open');
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
   }
-
 
   /* ── Formulario Formspree ── */
   (function() {
-    var form      = document.getElementById('contact-form');
-    var submitBtn = document.getElementById('submit-btn');
-    var errorMsg  = document.getElementById('form-error');
-    var successEl = document.getElementById('success-msg');
+    const form      = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorEl   = document.getElementById('form-error');
+    const successEl = document.getElementById('success-msg');
 
     function markField(el, valid) {
-      el.style.borderColor = valid ? '#2A2B28' : '#CF6679';
+      el.classList.toggle('border-error', !valid);
+      el.classList.toggle('border-border', valid);
     }
     function setLoading(on) {
       submitBtn.disabled    = on;
@@ -738,25 +620,27 @@
       submitBtn.style.cursor  = on ? 'not-allowed' : 'pointer';
     }
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      errorMsg.style.display = 'none';
+      errorEl.classList.add('hidden');
 
-      var nombre   = document.getElementById('nombre');
-      var telefono = document.getElementById('telefono');
-      var servicio = document.getElementById('servicio');
-      var valid    = true;
+      const nombre   = document.getElementById('nombre');
+      const telefono = document.getElementById('telefono');
+      const servicio = document.getElementById('servicio');
+      let valid = true;
 
-      [nombre, telefono].forEach(function(el) {
-        if (!el.value.trim()) { markField(el, false); valid = false; }
-        else                  { markField(el, true); }
+      [nombre, telefono].forEach(el => {
+        const ok = !!el.value.trim();
+        markField(el, ok);
+        if (!ok) valid = false;
       });
-      if (!servicio.value) { markField(servicio, false); valid = false; }
-      else                  { markField(servicio, true); }
+      const svcOk = !!servicio.value;
+      markField(servicio, svcOk);
+      if (!svcOk) valid = false;
 
       if (!valid) {
-        errorMsg.textContent   = 'Por favor completa los campos obligatorios.';
-        errorMsg.style.display = 'block';
+        errorEl.textContent = 'Por favor completa los campos obligatorios.';
+        errorEl.classList.remove('hidden');
         return;
       }
 
@@ -764,7 +648,7 @@
 
       try {
         // ⚠️  Reemplaza TU-ENDPOINT con tu ID real de Formspree (ej: xpwzknab)
-        var res = await fetch('https://formspree.io/f/TU-ENDPOINT', {
+        const res = await fetch('https://formspree.io/f/TU-ENDPOINT', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
@@ -778,40 +662,24 @@
         if (res.ok) {
           form.style.transition = 'opacity 0.4s ease';
           form.style.opacity    = '0';
-          setTimeout(function() {
-            form.style.display         = 'none';
-            successEl.style.display    = 'block';
-            requestAnimationFrame(function() { successEl.style.opacity = '1'; });
+          setTimeout(() => {
+            form.style.display        = 'none';
+            successEl.classList.remove('hidden');
+            requestAnimationFrame(() => { successEl.style.opacity = '1'; });
           }, 400);
         } else {
-          var body = await res.json().catch(function() { return {}; });
-          errorMsg.textContent   = body.error || 'Error al enviar. Intenta de nuevo.';
-          errorMsg.style.display = 'block';
+          const body = await res.json().catch(() => ({}));
+          errorEl.textContent = body.error || 'Error al enviar. Intenta de nuevo.';
+          errorEl.classList.remove('hidden');
           setLoading(false);
         }
-      } catch(_) {
-        errorMsg.textContent   = 'Sin conexi\u00f3n. Verifica tu internet e intenta de nuevo.';
-        errorMsg.style.display = 'block';
+      } catch (_) {
+        errorEl.textContent = 'Sin conexión. Verifica tu internet e intenta de nuevo.';
+        errorEl.classList.remove('hidden');
         setLoading(false);
       }
     });
-
-    /* Responsive: apilar en mobile */
-    var grid = document.getElementById('cta-grid');
-    function resizeGrid() {
-      if (!grid) return;
-      if (window.innerWidth <= 768) {
-        grid.style.gridTemplateColumns = '1fr';
-        grid.style.gap = '48px';
-      } else {
-        grid.style.gridTemplateColumns = '1fr 1fr';
-        grid.style.gap = '80px';
-      }
-    }
-    resizeGrid();
-    window.addEventListener('resize', resizeGrid);
   })();
-
-  </script>
+</script>
 </body>
 </html>
